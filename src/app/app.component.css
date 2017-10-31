@@ -1,0 +1,41 @@
+.activities {
+	display: table;
+	border: none;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.activities thead {
+	display: table-header-group;
+	vertical-align: middle;
+	border-color: inherit;
+}
+
+.activities thead tr {
+	border-top: 1px solid #e6eaef !important;
+	border-bottom: 1px solid #e6eaef !important;
+}
+
+.activities thead th {
+	text-transform: uppercase;
+	text-align: left;
+	padding: 6px 0 6px 10px;
+	color: #FFFFFF;
+}
+
+.activities tbody {
+	display: table-row-group;
+	vertical-align: middle;
+	border-color: inherit;
+}
+
+.activities tbody tr {
+	border-bottom: 1px solid #e6eaef !important;
+	white-space: nowrap;
+}
+
+.activities tbody td {
+	line-height: 22px;
+	text-align: left;
+	padding: 6px 0 6px 10px;
+}

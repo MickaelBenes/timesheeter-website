@@ -1,1 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+	background-color: #2B2B2B;
+	color: #A9B7C6;
+}
+
+a {
+	color: #cc9900;
+}
