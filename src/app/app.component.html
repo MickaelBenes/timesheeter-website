@@ -1,5 +1,5 @@
 <div>
-	<p>Activities</p>
+	<h1>{{ this.title }}</h1>
 
 	<table class="activities">
 		<thead>
@@ -12,7 +12,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let activity of activities">
+			<tr *ngFor="let activity of this.activities">
 				<td>{{ activity.id }}</td>
 				<td>{{ activity.title }}</td>
 				<td>

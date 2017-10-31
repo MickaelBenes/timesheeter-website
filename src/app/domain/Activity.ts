@@ -4,5 +4,7 @@ export class Activity {
 	public title: string;
 	public activityType: string;
 	public activityTicket: string;
+	public startTime: object;
+	public duration: string;
 
 }

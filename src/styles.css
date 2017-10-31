@@ -6,3 +6,14 @@ body {
 a {
 	color: #cc9900;
 }
+
+.content-wrapper {
+	width: 100%;
+	max-width: 1280px;
+	margin: 0 auto;
+	background-color: #595959;
+	border: 1px solid #e6eaef;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}

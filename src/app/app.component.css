@@ -30,8 +30,11 @@
 }
 
 .activities tbody tr {
-	border-bottom: 1px solid #e6eaef !important;
 	white-space: nowrap;
+}
+
+.activities tbody tr:not(:last-child) {
+	border-bottom: 1px solid #e6eaef !important;
 }
 
 .activities tbody td {

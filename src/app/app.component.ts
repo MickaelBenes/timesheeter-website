@@ -1,40 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+import { Activity } from './domain/Activity';
+import { ActivityService } from './service/activity.service';
+
 @Component({
-	selector: 'app-root',
+	selector: 'ts-app-root',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.css']
 })
 
 export class AppComponent implements OnInit {
 
-	readonly redmine: string	= 'http://redmine.cross-systems.ch/issues/';
-	readonly api: string		= 'http://localhost:50000/activities';
-	readonly headers: HttpHeaders;
+	title	= 'Activities';
+	redmine	= 'http://redmine.cross-systems.ch/issues/';
 
-	public activities	= [];
+	activities: Activity[];
+	selectedActivity: Activity;
 
-	constructor( private http: HttpClient ) {
-		this.headers = new HttpHeaders({
-			'Authorization': 'Basic dXNlcjpwYXNz',
-			'Content-Type': 'application/json'
-		});
-	}
+	constructor( private activityService: ActivityService ) {}
 
 	ngOnInit(): void {
-		this.http.get<object[]>( this.api, {headers: this.headers, withCredentials: true} )
-			.subscribe(
-				data => {
-					data.forEach(activity => {
-						console.log( activity['activity'] );
-						this.activities.push( activity['activity'] );
-					});
-				},
-				err => {
-					console.log( err );
-				}
-			);
+		this.getActivities();
+	}
+
+	getActivities(): void {
+		this.activityService.getActivities()
+			.then( activities => this.activities = activities );
+	}
+
+	onSelect( activity: Activity ): void {
+		this.selectedActivity = activity;
 	}
 
 }

@@ -28,7 +28,7 @@ export class ActivityService {
 	getActivities(): Promise<Activity[]> {
 		return this.http.get( this.apiUrl, this.httpOpts )
 			.toPromise()
-			.then( response => response.json().data as Activity[] )
+			.then( response => response as Activity[] )
 			.catch( this.handleError );
 	}
 
@@ -37,14 +37,14 @@ export class ActivityService {
 
 		return this.http.get( url, this.httpOpts )
 			.toPromise()
-			.then( response => response.json().data as Activity )
+			.then( response => response as Activity )
 			.catch( this.handleError );
 	}
 
 	create( activity: Activity ): Promise<Activity> {
 		return this.http.post( this.apiUrl, JSON.stringify(activity), this.httpOpts )
 			.toPromise()
-			.then( response => response.json().data as Activity )
+			.then( response => response as Activity )
 			.catch( this.handleError );
 	}
 
@@ -53,7 +53,7 @@ export class ActivityService {
 
 		return this.http.patch( this.apiUrl, JSON.stringify(activity), this.httpOpts )
 			.toPromise()
-			.then( response => response.json().data as Activity )
+			.then( response => response as Activity )
 			.catch( this.handleError );
 	}
 
