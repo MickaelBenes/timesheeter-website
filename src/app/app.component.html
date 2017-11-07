@@ -1,23 +1,29 @@
 <div>
 	<h1>{{ this.title }}</h1>
 
-	<button class="btn" *ngIf="!displayForm" (click)="displayForm=true">Add activity</button>
+	<button class="btn mb-4" *ngIf="!displayForm" (click)="displayForm=true">Add activity</button>
 
-	<div class="" *ngIf="displayForm">
-		<div>
+	<div class="activity-form mb-4" *ngIf="displayForm">
+		<div class="form-group">
+			<input #title required="required">
+			<span class="highlight"></span>
+			<span class="bar"></span>
 			<label>Title</label>
-			<input #title>
 		</div>
-		<div>
-			<label>Activity type</label>
-			<select #activityType>
+		<div class="form-group">
+			<select #activityType required="required">
 				<option>Select an activity type...</option>
 				<option value="redmine">Redmine</option>
 			</select>
+			<span class="highlight"></span>
+			<span class="bar"></span>
+			<label>Activity type</label>
 		</div>
-		<div>
-			<label>Title</label>
-			<input #activityTicket>
+		<div class="form-group">
+			<input #activityTicket required="required">
+			<span class="highlight"></span>
+			<span class="bar"></span>
+			<label>Activity ticket</label>
 		</div>
 		<div>
 			<button class="btn" (click)="create( title.value, activityType.value, activityTicket.value )">Create</button>
