@@ -1,6 +1,6 @@
 body {
 	background-color: #2B2B2B;
-	color: #A9B7C6;
+	color: #66ccff;
 }
 
 a {
@@ -8,7 +8,6 @@ a {
 }
 
 .content-wrapper {
-	width: 100%;
 	max-width: 1280px;
 	margin: 0 auto;
 	padding: 25px;
@@ -17,4 +16,24 @@ a {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
+}
+
+.btn {
+	display: inline-block;
+	margin: 5px 0;
+	padding: 5px 10px;
+	min-width: 100px;
+	border: none;
+	border-radius: 20px;
+	background-color: #f2f2f2;
+	color: #333333;
+	text-transform: uppercase;
+	font-weight: 700;
+	cursor: pointer;
+	transition: color 0.2s, background-color 0.2s;
+}
+
+.btn:hover {
+	background-color: #333333;
+	color: #f2f2f2;
 }

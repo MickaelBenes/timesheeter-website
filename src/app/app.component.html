@@ -1,6 +1,29 @@
 <div>
 	<h1>{{ this.title }}</h1>
 
+	<button class="btn" *ngIf="!displayForm" (click)="displayForm=true">Add activity</button>
+
+	<div class="" *ngIf="displayForm">
+		<div>
+			<label>Title</label>
+			<input #title>
+		</div>
+		<div>
+			<label>Activity type</label>
+			<select #activityType>
+				<option>Select an activity type...</option>
+				<option value="redmine">Redmine</option>
+			</select>
+		</div>
+		<div>
+			<label>Title</label>
+			<input #activityTicket>
+		</div>
+		<div>
+			<button class="btn" (click)="create( title.value, activityType.value, activityTicket.value )">Create</button>
+		</div>
+	</div>
+
 	<table class="activities">
 		<thead>
 			<tr>
@@ -17,7 +40,7 @@
 				<td>{{ activity.title }}</td>
 				<td>
 					<a *ngIf="activity.activityType && activity.activityTicket" href="{{ this.redmine }}{{ activity.activityTicket }}">
-						{{ activity.activityType }} #{{ activity.activityTicket }}
+						<a href="{{ this.redmine }}">{{ activity.activityType }} #{{ activity.activityTicket }}</a>
 					</a>
 				</td>
 				<td>{{ activity.startTime.year }}-{{ activity.startTime.monthValue }}-{{ activity.startTime.dayOfMonth }}</td>

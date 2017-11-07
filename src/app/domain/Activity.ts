@@ -7,4 +7,10 @@ export class Activity {
 	public startTime: object;
 	public duration: string;
 
+	constructor( title, activityType, activityTicket ) {
+		this.title			= title;
+		this.activityType	= activityType;
+		this.activityTicket	= activityTicket;
+	}
+
 }

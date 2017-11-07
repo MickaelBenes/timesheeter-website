@@ -12,8 +12,9 @@ import { ActivityService } from './service/activity.service';
 
 export class AppComponent implements OnInit {
 
-	title	= 'Activities';
-	redmine	= 'http://redmine.cross-systems.ch/issues/';
+	title		= 'Activities';
+	redmine		= 'http://redmine.cross-systems.ch/issues/';
+	displayForm	= false;
 
 	activities: Activity[];
 	selectedActivity: Activity;
@@ -31,6 +32,18 @@ export class AppComponent implements OnInit {
 
 	onSelect( activity: Activity ): void {
 		this.selectedActivity = activity;
+	}
+
+	create( title, activityType, activityTicket ): void {
+		console.log( 'Parameters:' );
+		console.log( title, activityType, activityTicket );
+
+		const activity = new Activity( title, activityType, activityTicket );
+
+		this.activityService.create( activity )
+			.then(newActivity => {
+				this.activities.push( newActivity );
+			});
 	}
 
 }
