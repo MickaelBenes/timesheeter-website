@@ -108,4 +108,12 @@ export class AppComponent implements OnInit,  OnDestroy {
 			});
 	}
 
+	delete( id: number ): void {
+		this.activityService.delete( id )
+			.then(() => {
+				const indexOldAct = this.activities.findIndex( act => act.id === id );
+				this.activities.splice( indexOldAct, 1 );
+			});
+	}
+
 }
