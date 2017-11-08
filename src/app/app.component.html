@@ -12,7 +12,7 @@
 		</div>
 		<div class="form-group">
 			<select #activityType required="required">
-				<option>Select an activity type...</option>
+				<option value="">Select an activity type...</option>
 				<option value="Redmine">Redmine</option>
 			</select>
 			<span class="highlight"></span>
@@ -25,7 +25,7 @@
 			<span class="bar"></span>
 			<label>Activity ticket</label>
 		</div>
-		<div>
+		<div class="form-group">
 			<button class="btn" (click)="this.toggleForm()">Cancel</button>
 			<button class="btn btn-action" (click)="create( title.value, activityType.value, activityTicket.value )">Create</button>
 		</div>
@@ -39,6 +39,7 @@
 				<th>Ticket</th>
 				<th>Date</th>
 				<th>Time spent</th>
+				<th width="200">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -51,11 +52,22 @@
 					</a>
 				</td>
 				<td>{{ activity.startTime.year }}-{{ activity.startTime.monthValue }}-{{ activity.startTime.dayOfMonth }}</td>
+				<td>{{ activity.duration }}</td>
 				<td>
-					{{ activity.duration }}
-					<span class="btn btn-stop"
+					<button class="btn btn-mini btn-mini-action"
 						  *ngIf="activity.stopTime === null"
-						  (click)="this.stop( activity.id )">stop</span>
+						  (click)="this.stop( activity.id )">
+						<span class="short">S</span>
+						<span class="long">stop</span>
+					</button>
+					<button class="btn btn-mini btn-mini-action" (click)="null">
+						<span class="short">D</span>
+						<span class="long">duplicate</span>
+					</button>
+					<button class="btn btn-mini btn-mini-delete" (click)="null">
+						<span class="short">X</span>
+						<span class="long">delete</span>
+					</button>
 				</td>
 			</tr>
 		</tbody>
