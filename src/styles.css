@@ -45,6 +45,11 @@ a {
 	transition: color 0.2s, background-color 0.2s;
 }
 
+.btn.btn-action {
+	background-color: #2196F3;
+	color: #bce0fb;
+}
+
 .btn:hover {
 	background-color: #333333;
 	color: #f2f2f2;
@@ -80,7 +85,11 @@ a {
 }
 
 .form-group select option {
-	background-color: transparent;
+	background-color: #595959;
+}
+
+.form-group select option:focus {
+	background-color: #cc9900;
 }
 
 .form-group input:focus {

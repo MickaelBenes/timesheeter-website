@@ -4,7 +4,8 @@ export class Activity {
 	public title: string;
 	public activityType: string;
 	public activityTicket: string;
-	public startTime: object;
+	public startTime;
+	public stopTime;
 	public duration: string;
 
 	constructor( title, activityType, activityTicket ) {

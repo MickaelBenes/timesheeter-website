@@ -18,7 +18,9 @@ export class AppComponent implements OnInit {
 	activities: Activity[];
 	selectedActivity: Activity;
 
-	constructor( private activityService: ActivityService ) {}
+	constructor( private activityService: ActivityService ) {
+		setInterval( () => this.refreshActivitiesDuration(), 1000 );
+	}
 
 	ngOnInit(): void {
 		this.getActivities();
@@ -50,6 +52,39 @@ export class AppComponent implements OnInit {
 				this.activities.push( newActivity );
 				this.toggleForm();
 			});
+	}
+
+	refreshActivitiesDuration(): void {
+		this.activities.forEach( activity => {
+			if ( activity.stopTime === null ) {
+				const now = new Date();
+				const startTime = new Date(
+					activity.startTime.year,
+					activity.startTime.monthValue - 1,
+					activity.startTime.dayOfMonth,
+					activity.startTime.hour,
+					activity.startTime.minute,
+					activity.startTime.second
+				);
+				const difference = now.getTime() - startTime.getTime();
+				const seconds = Math.floor(difference / 1000);
+				const minutes = Math.floor(seconds / 60);
+				const hours = Math.floor(minutes / 60);
+				const hoursCur = hours % 60;
+				const minutesCur = minutes % 60;
+				const secondsCur = seconds % 60;
+
+				function formatTimeUnit(unit: number): string {
+					if (unit.toString().length === 1) {
+						return '0' + unit;
+					}
+
+					return unit.toString();
+				}
+
+				activity.duration = formatTimeUnit(hoursCur) + ':' + formatTimeUnit(minutesCur) + ':' + formatTimeUnit(secondsCur);
+			}
+		});
 	}
 
 }

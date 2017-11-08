@@ -1,7 +1,7 @@
 <div>
 	<h1 class="main-title">{{ this.title }}</h1>
 
-	<button class="btn mt-4 mb-4" *ngIf="!displayForm" (click)="this.toggleForm()">New activity</button>
+	<button class="btn btn-action mt-4 mb-4" *ngIf="!displayForm" (click)="this.toggleForm()">New activity</button>
 
 	<div class="activity-form mt-4 mb-4" *ngIf="displayForm">
 		<div class="form-group">
@@ -13,7 +13,7 @@
 		<div class="form-group">
 			<select #activityType required="required">
 				<option>Select an activity type...</option>
-				<option value="redmine">Redmine</option>
+				<option value="Redmine">Redmine</option>
 			</select>
 			<span class="highlight"></span>
 			<span class="bar"></span>
@@ -27,7 +27,7 @@
 		</div>
 		<div>
 			<button class="btn" (click)="this.toggleForm()">Cancel</button>
-			<button class="btn" (click)="create( title.value, activityType.value, activityTicket.value )">Create</button>
+			<button class="btn btn-action" (click)="create( title.value, activityType.value, activityTicket.value )">Create</button>
 		</div>
 	</div>
 
@@ -52,7 +52,7 @@
 				</td>
 				<td>{{ activity.startTime.year }}-{{ activity.startTime.monthValue }}-{{ activity.startTime.dayOfMonth }}</td>
 				<td>
-					<span *ngIf="activity.duration">{{ activity.duration }}</span>
+					<span class="timer">{{ activity.duration }}</span>
 				</td>
 			</tr>
 		</tbody>
