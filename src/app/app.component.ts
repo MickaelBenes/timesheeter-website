@@ -83,6 +83,14 @@ export class AppComponent implements OnInit,  OnDestroy {
 	}
 
 	create( title, activityType, activityTicket ): void {
+		this.activities.forEach(act => {
+			console.log( act );
+
+			if ( act.stopTime === null ) {
+				this.stop( act.id );
+			}
+		});
+
 		const activity = new Activity( title, activityType, activityTicket );
 
 		this.activityService.create( activity )

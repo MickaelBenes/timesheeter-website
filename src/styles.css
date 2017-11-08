@@ -14,6 +14,10 @@ a {
 	color: #cc9900;
 }
 
+a:hover {
+	color: #cc9900;
+}
+
 .main-title {
 	margin: 0 auto;
 	width: 150px;
@@ -64,7 +68,7 @@ a {
 .btn.btn-mini {
 	padding: 0;
 	width: 24px;
-	transition: width 0.5s, content 0.5s;
+	transition: width 0.5s;
 }
 
 .btn.btn-mini span.long {
@@ -73,6 +77,10 @@ a {
 
 .btn.btn-mini:hover {
 	width: 100px;
+}
+
+.btn.btn-mini:hover span.short, .btn.btn-mini:hover span.long {
+	transition: opacity 1s;
 }
 
 .btn.btn-mini:hover span.short {

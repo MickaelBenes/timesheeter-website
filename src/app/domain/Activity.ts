@@ -14,4 +14,8 @@ export class Activity {
 		this.activityTicket	= activityTicket;
 	}
 
+	isActive(): boolean {
+		return this.stopTime === null || this.stopTime === undefined;
+	}
+
 }
