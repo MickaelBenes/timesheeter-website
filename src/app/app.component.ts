@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Activity } from './domain/Activity';
 import { ActivityService } from './service/activity.service';
@@ -25,6 +24,15 @@ export class AppComponent implements OnInit {
 		this.getActivities();
 	}
 
+	toggleForm(): void {
+		if ( this.displayForm === false ) {
+			this.displayForm = true;
+		}
+		else {
+			this.displayForm = false;
+		}
+	}
+
 	getActivities(): void {
 		this.activityService.getActivities()
 			.then( activities => this.activities = activities );
@@ -35,14 +43,12 @@ export class AppComponent implements OnInit {
 	}
 
 	create( title, activityType, activityTicket ): void {
-		console.log( 'Parameters:' );
-		console.log( title, activityType, activityTicket );
-
 		const activity = new Activity( title, activityType, activityTicket );
 
 		this.activityService.create( activity )
 			.then(newActivity => {
 				this.activities.push( newActivity );
+				this.toggleForm();
 			});
 	}
 

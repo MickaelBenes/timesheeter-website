@@ -1,9 +1,9 @@
 <div>
-	<h1>{{ this.title }}</h1>
+	<h1 class="main-title">{{ this.title }}</h1>
 
-	<button class="btn mb-4" *ngIf="!displayForm" (click)="displayForm=true">Add activity</button>
+	<button class="btn mt-4 mb-4" *ngIf="!displayForm" (click)="this.toggleForm()">New activity</button>
 
-	<div class="activity-form mb-4" *ngIf="displayForm">
+	<div class="activity-form mt-4 mb-4" *ngIf="displayForm">
 		<div class="form-group">
 			<input #title required="required">
 			<span class="highlight"></span>
@@ -17,7 +17,7 @@
 			</select>
 			<span class="highlight"></span>
 			<span class="bar"></span>
-			<label>Activity type</label>
+			<!--<label>Activity type</label>-->
 		</div>
 		<div class="form-group">
 			<input #activityTicket required="required">
@@ -26,6 +26,7 @@
 			<label>Activity ticket</label>
 		</div>
 		<div>
+			<button class="btn" (click)="this.toggleForm()">Cancel</button>
 			<button class="btn" (click)="create( title.value, activityType.value, activityTicket.value )">Create</button>
 		</div>
 	</div>

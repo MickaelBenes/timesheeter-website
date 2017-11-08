@@ -5,12 +5,18 @@
 }
 
 body {
+	padding: 50px;
 	background-color: #2B2B2B;
-	color: #66ccff;
+	color: #f2f2f2;
 }
 
 a {
 	color: #cc9900;
+}
+
+.main-title {
+	margin: 0 auto;
+	width: 150px;
 }
 
 .content-wrapper {
@@ -46,12 +52,17 @@ a {
 
 .activity-form {
 	position: relative;
-	padding: 0 10px 10px 10px;
-	border: 1px solid #66ccff;
+	padding: 10px;
+	border: 1px solid #f2f2f2;
 	border-radius: 5px;
+	width: 50%;
 }
 
 .form-group {
+	position: relative;
+}
+
+.form-group:not(:first-child) {
 	position: relative;
 	margin: 45px 0;
 }
@@ -62,45 +73,46 @@ a {
 	font-size: 18px;
 	padding: 10px 10px 10px 5px;
 	display: block;
-	width: 320px;
+	width: 100%;
 	border: none;
 	border-radius: 0;
 	border-bottom: 1px solid #f2f2f2;
 }
 
-.form-group option {
-	background: none;
+.form-group select option {
+	background-color: transparent;
 }
 
 .form-group input:focus {
 	outline: none;
 }
 
-.form-group input:focus label, .form-group input:valid label {
+.form-group input:focus ~ label, .form-group input:valid ~ label {
 	top: -14px;
 	font-size: 12px;
-	color: #66ccff;
+	color: #f2f2f2;
 }
 
-.form-group input:focus .bar:before {
-	 width: 320px;
+.form-group input:focus ~ .bar:before {
+	 width: 500px;
 }
 
 .form-group label {
-	color: #66ccff;
+	color: #f2f2f2;
 	font-size: 16px;
 	font-weight: normal;
 	position: absolute;
 	pointer-events: none;
 	left: 5px;
 	top: 10px;
+	-webkit-transition: 300ms ease all;
 	transition: 300ms ease all;
 }
 
 .form-group .bar {
 	position: relative;
 	display: block;
-	width: 320px;
+	width: 500px;
 }
 
 .form-group .bar:before {
@@ -109,7 +121,7 @@ a {
 	 width: 0;
 	 bottom: 0px;
 	 position: absolute;
-	 background: #66ccff;
+	 background: #f2f2f2;
 	 transition: 300ms ease all;
 	 left: 0%;
 }
