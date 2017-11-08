@@ -31,6 +31,7 @@ a {
 }
 
 .btn {
+	position: relative;
 	display: inline-block;
 	margin: 5px 0;
 	padding: 5px 10px;
@@ -45,14 +46,31 @@ a {
 	transition: color 0.2s, background-color 0.2s;
 }
 
+.btn:hover {
+	background-color: #333333;
+	color: #f2f2f2;
+}
+
 .btn.btn-action {
 	background-color: #2196F3;
 	color: #bce0fb;
 }
 
-.btn:hover {
-	background-color: #333333;
-	color: #f2f2f2;
+.btn.btn-action:hover {
+	background-color: #bce0fb;
+	color: #2196F3;
+}
+
+.btn.btn-stop {
+	padding: 0;
+	min-width: 50px;
+	background-color: #cc3300;
+	color: #FFFFFF;
+}
+
+.btn.btn-stop:hover {
+	background-color: #cc0000;
+	/*color: #2196F3;*/
 }
 
 .activity-form {

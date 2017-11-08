@@ -48,6 +48,15 @@ export class ActivityService {
 			.catch( this.handleError );
 	}
 
+	stop( id: number ): Promise<Activity> {
+		const url = `${ this.apiUrl }/${ id }/stop`;
+
+		return this.http.post( url, null, this.httpOpts )
+			.toPromise()
+			.then( response => response as  Activity )
+			.catch( this.handleError );
+	}
+
 	update( id: number, activity: Activity ): Promise<Activity> {
 		const url = `${ this.apiUrl }/${ id }`;
 

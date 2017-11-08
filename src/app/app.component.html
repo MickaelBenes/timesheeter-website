@@ -52,7 +52,10 @@
 				</td>
 				<td>{{ activity.startTime.year }}-{{ activity.startTime.monthValue }}-{{ activity.startTime.dayOfMonth }}</td>
 				<td>
-					<span class="timer">{{ activity.duration }}</span>
+					{{ activity.duration }}
+					<span class="btn btn-stop"
+						  *ngIf="activity.stopTime === null"
+						  (click)="this.stop( activity.id )">stop</span>
 				</td>
 			</tr>
 		</tbody>

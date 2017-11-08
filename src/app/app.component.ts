@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Activity } from './domain/Activity';
 import { ActivityService } from './service/activity.service';
@@ -9,21 +9,26 @@ import { ActivityService } from './service/activity.service';
 	styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit,  OnDestroy {
 
 	title		= 'Activities';
 	redmine		= 'http://redmine.cross-systems.ch/issues/';
 	displayForm	= false;
+	durationInterval;
 
 	activities: Activity[];
 	selectedActivity: Activity;
 
 	constructor( private activityService: ActivityService ) {
-		setInterval( () => this.refreshActivitiesDuration(), 1000 );
+		this.durationInterval = setInterval( () => this.refreshActivitiesDuration(), 1000 );
 	}
 
 	ngOnInit(): void {
 		this.getActivities();
+	}
+
+	ngOnDestroy(): void {
+		clearInterval( this.durationInterval );
 	}
 
 	toggleForm(): void {
@@ -33,25 +38,6 @@ export class AppComponent implements OnInit {
 		else {
 			this.displayForm = false;
 		}
-	}
-
-	getActivities(): void {
-		this.activityService.getActivities()
-			.then( activities => this.activities = activities );
-	}
-
-	onSelect( activity: Activity ): void {
-		this.selectedActivity = activity;
-	}
-
-	create( title, activityType, activityTicket ): void {
-		const activity = new Activity( title, activityType, activityTicket );
-
-		this.activityService.create( activity )
-			.then(newActivity => {
-				this.activities.push( newActivity );
-				this.toggleForm();
-			});
 	}
 
 	refreshActivitiesDuration(): void {
@@ -85,6 +71,33 @@ export class AppComponent implements OnInit {
 				activity.duration = formatTimeUnit(hoursCur) + ':' + formatTimeUnit(minutesCur) + ':' + formatTimeUnit(secondsCur);
 			}
 		});
+	}
+
+	getActivities(): void {
+		this.activityService.getActivities()
+			.then( activities => this.activities = activities );
+	}
+
+	onSelect( activity: Activity ): void {
+		this.selectedActivity = activity;
+	}
+
+	create( title, activityType, activityTicket ): void {
+		const activity = new Activity( title, activityType, activityTicket );
+
+		this.activityService.create( activity )
+			.then(newActivity => {
+				this.activities.push( newActivity );
+				this.toggleForm();
+			});
+	}
+
+	stop( id: number ): void {
+		this.activityService.stop( id )
+			.then(activity => {
+				const indexOldAct = this.activities.findIndex( act => act.id === activity.id );
+				this.activities[ indexOldAct ] = activity;
+			});
 	}
 
 }
