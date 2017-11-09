@@ -33,7 +33,7 @@
 	white-space: nowrap;
 }
 
-.activities tbody tr:nth-child(even) {
+.activities tbody tr:nth-child(odd) {
 	background-color: #737373;
 }
 
@@ -43,8 +43,7 @@
 
 .activities tbody tr.selected {
 	background-color: #b3b3b3;
-	color: #333333;
-	font-weight: 500;
+	color: #000000;
 }
 
 .activities tbody tr.selected td a {
