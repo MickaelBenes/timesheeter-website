@@ -44,6 +44,11 @@
 .activities tbody tr.selected {
 	background-color: #b3b3b3;
 	color: #333333;
+	font-weight: 500;
+}
+
+.activities tbody tr.selected td a {
+	color: #b38600;
 }
 
 .activities tbody tr:not(:last-child) {
