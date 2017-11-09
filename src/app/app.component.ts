@@ -4,7 +4,6 @@ import { Activity } from './domain/Activity';
 import { ActivityService } from './service/activity.service';
 
 import { ActivityUtils } from './utils/ActivityUtils';
-import { DateUtils } from './utils/DateUtils';
 
 @Component({
 	selector: 'ts-app-root',

@@ -44,7 +44,7 @@
 				<td>{{ activity.id }}</td>
 				<td>{{ activity.title }}</td>
 				<td>
-					<a *ngIf="activity.activityType && activity.activityTicket" href="{{ this.redmine }}{{ activity.activityTicket }}">
+					<a *ngIf="activity.activityType && activity.activityTicket" href="{{ this.redmine + activity.activityTicket }}">
 						<a href="{{ this.redmine }}">{{ activity.activityType }} #{{ activity.activityTicket }}</a>
 					</a>
 				</td>

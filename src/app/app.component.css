@@ -33,6 +33,18 @@
 	white-space: nowrap;
 }
 
+.activities tbody tr:nth-child(even) {
+	background-color: #737373;
+}
+
+.activities tbody tr:hover {
+	background-color: #8c8c8c;
+}
+
+.activities tbody tr:active {
+	background-color: #b3b3b3;
+}
+
 .activities tbody tr:not(:last-child) {
 	border-bottom: 1px solid #e6eaef !important;
 }
