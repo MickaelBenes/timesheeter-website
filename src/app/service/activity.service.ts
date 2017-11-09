@@ -75,4 +75,13 @@ export class ActivityService {
 			.catch( this.handleError );
 	}
 
+	duplicate( id: number ): Promise<Activity> {
+		const url = `${ this.apiUrl }/startFrom/${ id }`;
+
+		return this.http.post( url, null, this.httpOpts )
+			.toPromise()
+			.then( response => response as Activity )
+			.catch( this.handleError );
+	}
+
 }

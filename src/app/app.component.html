@@ -49,7 +49,7 @@
 						<a href="{{ this.redmine }}">{{ activity.activityType }} #{{ activity.activityTicket }}</a>
 					</a>
 				</td>
-				<td>{{ activity.startTime.year }}-{{ activity.startTime.monthValue }}-{{ activity.startTime.dayOfMonth }}</td>
+				<td>{{ this.getDateAsString(activity) }}</td>
 				<td>{{ activity.duration }}</td>
 				<td>
 					<button class="btn btn-mini btn-mini-action"
@@ -58,7 +58,7 @@
 						<span class="short">S</span>
 						<span class="long">stop</span>
 					</button>
-					<button class="btn btn-mini btn-mini-action" (click)="null">
+					<button class="btn btn-mini btn-mini-action" (click)="this.duplicate( activity.id )">
 						<span class="short">D</span>
 						<span class="long">duplicate</span>
 					</button>

@@ -3,6 +3,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Activity } from './domain/Activity';
 import { ActivityService } from './service/activity.service';
 
+import { ActivityUtils } from './utils/ActivityUtils';
+import { DateUtils } from './utils/DateUtils';
+
 @Component({
 	selector: 'ts-app-root',
 	templateUrl: './app.component.html',
@@ -11,10 +14,11 @@ import { ActivityService } from './service/activity.service';
 
 export class AppComponent implements OnInit,  OnDestroy {
 
-	title		= 'Activities';
-	redmine		= 'http://redmine.cross-systems.ch/issues/';
-	displayForm	= false;
-	durationInterval;
+	title				= 'Activities';
+	redmine				= 'http://redmine.cross-systems.ch/issues/';
+	displayForm			= false;
+	durationInterval	= null;
+	getDateAsString		= ActivityUtils.getDateAsString;
 
 	activities: Activity[];
 	selectedActivity: Activity;
@@ -40,39 +44,6 @@ export class AppComponent implements OnInit,  OnDestroy {
 		}
 	}
 
-	refreshActivitiesDuration(): void {
-		this.activities.forEach( activity => {
-			if ( activity.stopTime === null ) {
-				const now = new Date();
-				const startTime = new Date(
-					activity.startTime.year,
-					activity.startTime.monthValue - 1,
-					activity.startTime.dayOfMonth,
-					activity.startTime.hour,
-					activity.startTime.minute,
-					activity.startTime.second
-				);
-				const difference = now.getTime() - startTime.getTime();
-				const seconds = Math.floor(difference / 1000);
-				const minutes = Math.floor(seconds / 60);
-				const hours = Math.floor(minutes / 60);
-				const hoursCur = hours % 60;
-				const minutesCur = minutes % 60;
-				const secondsCur = seconds % 60;
-
-				function formatTimeUnit(unit: number): string {
-					if (unit.toString().length === 1) {
-						return '0' + unit;
-					}
-
-					return unit.toString();
-				}
-
-				activity.duration = formatTimeUnit(hoursCur) + ':' + formatTimeUnit(minutesCur) + ':' + formatTimeUnit(secondsCur);
-			}
-		});
-	}
-
 	getActivities(): void {
 		this.activityService.getActivities()
 			.then( activities => this.activities = activities );
@@ -83,13 +54,7 @@ export class AppComponent implements OnInit,  OnDestroy {
 	}
 
 	create( title, activityType, activityTicket ): void {
-		this.activities.forEach(act => {
-			console.log( act );
-
-			if ( act.stopTime === null ) {
-				this.stop( act.id );
-			}
-		});
+		this.stopActiveActivities();
 
 		const activity = new Activity( title, activityType, activityTicket );
 
@@ -114,6 +79,31 @@ export class AppComponent implements OnInit,  OnDestroy {
 				const indexOldAct = this.activities.findIndex( act => act.id === id );
 				this.activities.splice( indexOldAct, 1 );
 			});
+	}
+
+	duplicate( id: number ): void  {
+		this.stopActiveActivities();
+
+		this.activityService.duplicate( id )
+			.then(activity => {
+				this.activities.push( activity );
+			});
+	}
+
+	private refreshActivitiesDuration(): void {
+		this.activities.forEach( activity => {
+			if ( activity.stopTime === null ) {
+				activity.duration = ActivityUtils.getElapsedTimeAsString( activity );
+			}
+		});
+	}
+
+	private stopActiveActivities(): void {
+		this.activities.forEach(activity => {
+			if ( activity.stopTime === null ) {
+				this.stop( activity.id );
+			}
+		});
 	}
 
 }
