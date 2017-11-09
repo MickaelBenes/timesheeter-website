@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 
 import { Activity } from './domain/Activity';
 import { ActivityService } from './service/activity.service';
-
 import { ActivityUtils } from './utils/ActivityUtils';
+
+import * as $ from 'jquery';
 
 @Component({
 	selector: 'ts-app-root',
@@ -11,7 +12,7 @@ import { ActivityUtils } from './utils/ActivityUtils';
 	styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit,  OnDestroy {
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	title				= 'Activities';
 	redmine				= 'http://redmine.cross-systems.ch/issues/';
@@ -30,6 +31,26 @@ export class AppComponent implements OnInit,  OnDestroy {
 		this.getActivities();
 	}
 
+	ngAfterViewInit(): void {
+		// $( function() {
+		// 	$( document ).on('click', function() {
+		// 		$( '.activities tr' ).removeClass( 'selected' );
+		// 	});
+		//
+		// 	$( '.activities td' ).on('click', function() {
+		// 		$( '.activities tr' ).removeClass( 'selected' );
+		// 		$( this ).parent().addClass( 'selected' );
+		// 	});
+		// });
+
+		$(function() {
+			$( '.activities tr' ).focusout(function() {
+				$( this ).removeClass( 'selected' );
+			});
+
+		});
+	}
+
 	ngOnDestroy(): void {
 		clearInterval( this.durationInterval );
 	}
@@ -43,13 +64,13 @@ export class AppComponent implements OnInit,  OnDestroy {
 		}
 	}
 
+	onSelect( activity: Activity ): void {
+		this.selectedActivity = activity;
+	}
+
 	getActivities(): void {
 		this.activityService.getActivities()
 			.then( activities => this.activities = activities );
-	}
-
-	onSelect( activity: Activity ): void {
-		this.selectedActivity = activity;
 	}
 
 	create( title, activityType, activityTicket ): void {
@@ -61,6 +82,7 @@ export class AppComponent implements OnInit,  OnDestroy {
 			.then(newActivity => {
 				this.activities.push( newActivity );
 				this.toggleForm();
+				this.selectedActivity = null;
 			});
 	}
 
@@ -69,6 +91,7 @@ export class AppComponent implements OnInit,  OnDestroy {
 			.then(activity => {
 				const indexOldAct = this.activities.findIndex( act => act.id === activity.id );
 				this.activities[ indexOldAct ] = activity;
+				this.selectedActivity = null;
 			});
 	}
 
@@ -77,6 +100,10 @@ export class AppComponent implements OnInit,  OnDestroy {
 			.then(() => {
 				const indexOldAct = this.activities.findIndex( act => act.id === id );
 				this.activities.splice( indexOldAct, 1 );
+
+				if ( this.selectedActivity.id === id ) {
+					this.selectedActivity = null;
+				}
 			});
 	}
 

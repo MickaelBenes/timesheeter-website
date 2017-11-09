@@ -1,72 +1,73 @@
-<div>
-	<h1 class="main-title">{{ this.title }}</h1>
+<h1 class="main-title">{{ this.title }}</h1>
 
-	<button class="btn btn-action mt-4 mb-4" *ngIf="!displayForm" (click)="this.toggleForm()">New activity</button>
+<button class="btn btn-action mt-4 mb-4" *ngIf="!displayForm" (click)="this.toggleForm()">New activity</button>
 
-	<div class="activity-form mt-4 mb-4" *ngIf="displayForm">
-		<div class="form-group">
-			<input #title required="required">
-			<span class="bar"></span>
-			<label>Title</label>
-		</div>
-		<div class="form-group">
-			<select #activityType required="required">
-				<option value="">Select an activity type...</option>
-				<option value="Redmine">Redmine</option>
-			</select>
-			<span class="highlight"></span>
-			<span class="bar"></span>
-		</div>
-		<div class="form-group">
-			<input #activityTicket required="required">
-			<span class="bar"></span>
-			<label>Activity ticket</label>
-		</div>
-		<div class="form-group">
-			<button class="btn" (click)="this.toggleForm()">Cancel</button>
-			<button class="btn btn-action" (click)="create( title.value, activityType.value, activityTicket.value )">Create</button>
-		</div>
+<div class="activity-form mt-4 mb-4" *ngIf="displayForm">
+	<div class="form-group">
+		<input #title required="required">
+		<span class="bar"></span>
+		<label>Title</label>
 	</div>
-
-	<table class="activities">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Title</th>
-				<th>Ticket</th>
-				<th>Date</th>
-				<th>Time spent</th>
-				<th width="200">Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let activity of this.activities">
-				<td>{{ activity.id }}</td>
-				<td>{{ activity.title }}</td>
-				<td>
-					<a *ngIf="activity.activityType && activity.activityTicket" href="{{ this.redmine + activity.activityTicket }}">
-						<a href="{{ this.redmine }}">{{ activity.activityType }} #{{ activity.activityTicket }}</a>
-					</a>
-				</td>
-				<td>{{ this.getDateAsString(activity) }}</td>
-				<td>{{ activity.duration }}</td>
-				<td>
-					<button class="btn btn-mini btn-mini-action"
-						  *ngIf="activity.stopTime === null"
-						  (click)="this.stop( activity.id )">
-						<span class="short">S</span>
-						<span class="long">stop</span>
-					</button>
-					<button class="btn btn-mini btn-mini-action" (click)="this.duplicate( activity.id )">
-						<span class="short">D</span>
-						<span class="long">duplicate</span>
-					</button>
-					<button class="btn btn-mini btn-mini-delete" (click)="this.delete( activity.id )">
-						<span class="short">X</span>
-						<span class="long">delete</span>
-					</button>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="form-group">
+		<select #activityType required="required">
+			<option value="">Select an activity type...</option>
+			<option value="Redmine">Redmine</option>
+		</select>
+		<span class="highlight"></span>
+		<span class="bar"></span>
+	</div>
+	<div class="form-group">
+		<input #activityTicket required="required">
+		<span class="bar"></span>
+		<label>Activity ticket</label>
+	</div>
+	<div class="form-group">
+		<button class="btn" (click)="this.toggleForm()">Cancel</button>
+		<button class="btn btn-action" (click)="create( title.value, activityType.value, activityTicket.value )">Create</button>
+	</div>
 </div>
+
+<table class="activities">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Title</th>
+			<th>Ticket</th>
+			<th>Date</th>
+			<th>Time spent</th>
+			<th width="200">Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let activity of this.activities"
+			[class.selected]="activity === this.selectedActivity"
+			(click)="this.onSelect( activity )"
+		>
+			<td>{{ activity.id }}</td>
+			<td>{{ activity.title }}</td>
+			<td>
+				<a *ngIf="activity.activityType && activity.activityTicket" href="{{ this.redmine + activity.activityTicket }}">
+					<a href="{{ this.redmine }}">{{ activity.activityType }} #{{ activity.activityTicket }}</a>
+				</a>
+			</td>
+			<td>{{ this.getDateAsString(activity) }}</td>
+			<td>{{ activity.duration }}</td>
+			<td>
+				<button class="btn btn-mini btn-mini-action"
+					  *ngIf="activity.stopTime === null"
+					  (click)="this.stop( activity.id )">
+					<span class="short">S</span>
+					<span class="long">stop</span>
+				</button>
+				<button class="btn btn-mini btn-mini-action" (click)="this.duplicate( activity.id )">
+					<span class="short">D</span>
+					<span class="long">duplicate</span>
+				</button>
+				<button class="btn btn-mini btn-mini-delete" (click)="this.delete( activity.id )">
+					<span class="short">X</span>
+					<span class="long">delete</span>
+				</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
