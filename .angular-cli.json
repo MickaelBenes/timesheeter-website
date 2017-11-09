@@ -55,6 +55,9 @@
 		}
 	},
 	"defaults": {
+		"serve": {
+			"port": 50001
+		},
 		"styleExt": "css",
 		"class": {
 			"spec": false
