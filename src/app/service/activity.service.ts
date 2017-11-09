@@ -69,7 +69,7 @@ export class ActivityService {
 	delete( id: number ): Promise<void> {
 		const url = `${ this.apiUrl }/${ id }`;
 
-		return this.http.delete( this.apiUrl, this.httpOpts )
+		return this.http.delete( url, this.httpOpts )
 			.toPromise()
 			.then( () => null )
 			.catch( this.handleError );
