@@ -35,8 +35,13 @@
 	</div>
 	<div class="form-group">
 		<select #activityType required="required">
-			<option value="">Select an activity type...</option>
-			<option *ngFor="let actType of this.activityTypes" value="{{ actType.id }}">{{ actType.name }}</option>
+			<option value="" [attr.selected]="this.selectedActivity.activityType === '' ? true : null">
+				Select an activity type...
+			</option>
+			<option *ngFor="let actType of this.activityTypes" value="{{ actType.id }}"
+					[attr.selected]="this.selectedActivity.activityType === actType.name ? true : null">
+				{{ actType.name }}
+			</option>
 		</select>
 		<span class="highlight"></span>
 		<span class="bar"></span>
