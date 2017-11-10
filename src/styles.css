@@ -82,6 +82,7 @@ a:hover {
 	transition: all .5s;
 	white-space: nowrap;
 }
+
 .btn.btn-mini span.short {
 	transition: all .5s .5s;
 	left: 0;
@@ -89,6 +90,7 @@ a:hover {
 	margin: auto;
 	position: absolute;
 }
+
 .btn.btn-mini:hover {
 	max-width: 200px;
 }
