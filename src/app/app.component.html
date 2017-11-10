@@ -22,8 +22,33 @@
 		<label>Activity ticket</label>
 	</div>
 	<div class="form-group">
-		<button class="btn" (click)="this.toggleForm()">Cancel</button>
-		<button class="btn btn-action" (click)="create( title.value, activityType.value, activityTicket.value )">Create</button>
+		<button class="btn" (click)="this.toggleForm();">Cancel</button>
+		<button class="btn btn-action" (click)="this.create( title.value, activityType.value, activityTicket.value )">Create</button>
+	</div>
+</div>
+
+<div class="activity-form mt-4 mb-4" *ngIf="this.selectedActivity != null">
+	<div class="form-group">
+		<input #title required="required" value="{{ this.selectedActivity.title }}">
+		<span class="bar"></span>
+		<label>Title</label>
+	</div>
+	<div class="form-group">
+		<select #activityType required="required">
+			<option value="">Select an activity type...</option>
+			<option value="Redmine">Redmine</option>
+		</select>
+		<span class="highlight"></span>
+		<span class="bar"></span>
+	</div>
+	<div class="form-group">
+		<input #activityTicket required="required" value="{{ this.selectedActivity.activityTicket }}">
+		<span class="bar"></span>
+		<label>Activity ticket</label>
+	</div>
+	<div class="form-group">
+		<button class="btn" (click)="this.onSelect( null )">Cancel</button>
+		<button class="btn btn-action" (click)="this.update( title.value, activityType.value, activityTicket.value )">Update</button>
 	</div>
 </div>
 

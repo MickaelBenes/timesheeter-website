@@ -60,7 +60,7 @@ export class ActivityService {
 	update( id: number, activity: Activity ): Promise<Activity> {
 		const url = `${ this.apiUrl }/${ id }`;
 
-		return this.http.patch( this.apiUrl, JSON.stringify(activity), this.httpOpts )
+		return this.http.patch( url, JSON.stringify(activity), this.httpOpts )
 			.toPromise()
 			.then( response => response as Activity )
 			.catch( this.handleError );

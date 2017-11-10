@@ -55,15 +55,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 		clearInterval( this.durationInterval );
 	}
 
-	toggleForm(): void {
-		if ( this.displayForm === false ) {
-			this.displayForm = true;
-		}
-		else {
-			this.displayForm = false;
-		}
-	}
-
 	onSelect( activity: Activity ): void {
 		this.selectedActivity = activity;
 	}
@@ -76,13 +67,24 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 	create( title, activityType, activityTicket ): void {
 		this.stopActiveActivities();
 
-		const activity = new Activity( title, activityType, activityTicket );
+		const activity = new Activity( title.trim(), activityType, activityTicket );
 
 		this.activityService.create( activity )
 			.then(newActivity => {
 				this.activities.push( newActivity );
 				this.toggleForm();
 				this.selectedActivity = null;
+			});
+	}
+
+	update( title, activityType, activityTicket ): void {
+		const activity = new Activity( title.trim(), activityType, activityTicket );
+
+		this.activityService.update( this.selectedActivity.id, activity )
+			.then(updatedAct => {
+				const indexOldAct				= this.activities.indexOf( this.selectedActivity );
+				this.activities[ indexOldAct ]	= updatedAct;
+				this.selectedActivity			= null;
 			});
 	}
 
@@ -98,8 +100,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 	delete( id: number ): void {
 		this.activityService.delete( id )
 			.then(() => {
-				const indexOldAct = this.activities.findIndex( act => act.id === id );
-				this.activities.splice( indexOldAct, 1 );
+				this.activities	= this.activities.filter( a => a.id !== id );
 
 				if ( this.selectedActivity.id === id ) {
 					this.selectedActivity = null;
@@ -114,6 +115,15 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 			.then(activity => {
 				this.activities.push( activity );
 			});
+	}
+
+	private toggleForm(): void {
+		if ( this.displayForm === false ) {
+			this.displayForm = true;
+		}
+		else {
+			this.displayForm = false;
+		}
 	}
 
 	private refreshActivitiesDuration(): void {
