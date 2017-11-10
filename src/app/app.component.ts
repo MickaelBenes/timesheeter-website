@@ -5,6 +5,7 @@ import { ActivityService } from './service/activity.service';
 import { ActivityUtils } from './utils/ActivityUtils';
 
 import * as $ from 'jquery';
+import {ActivityType} from './domain/ActivityType';
 
 @Component({
 	selector: 'ts-app-root',
@@ -20,6 +21,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 	durationInterval	= null;
 	getDateAsString		= ActivityUtils.getDateAsString;
 
+	activityTypes: Array<ActivityType> = [
+		new ActivityType( 'Redmine', 'Redmine' )
+	];
 	activities: Activity[];
 	selectedActivity: Activity;
 
