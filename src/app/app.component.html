@@ -57,6 +57,9 @@
 	</div>
 </div>
 
+<ts-activity-pagination [offset]="this.offset" [limit]="this.limit"
+						[size]="this.nbActivities" (pageChange)="this.onPageChange( $event )"></ts-activity-pagination>
+
 <table class="activities">
 	<thead>
 		<tr>
@@ -69,7 +72,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let activity of this.activities"
+		<tr *ngFor="let activity of pagedActivities"
 			[class.selected]="activity === this.selectedActivity"
 			(click)="this.onSelect( activity )"
 		>

@@ -4,8 +4,9 @@ import { Activity } from './domain/Activity';
 import { ActivityService } from './service/activity.service';
 import { ActivityUtils } from './utils/ActivityUtils';
 
-import * as $ from 'jquery';
 import {ActivityType} from './domain/ActivityType';
+
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'ts-app-root',
@@ -20,11 +21,16 @@ export class AppComponent implements OnInit, OnDestroy {
 	displayForm			= false;
 	durationInterval	= null;
 	getDateAsString		= ActivityUtils.getDateAsString;
-
 	activityTypes: Array<ActivityType> = [
 		new ActivityType( 'Redmine', 'Redmine' )
 	];
+
+	offset: number			= 0;
+	limit: number			= 15;
+	nbActivities: number	= 0;
+
 	activities: Activity[];
+	pagedActivities: Activity[];
 	selectedActivity: Activity;
 
 	constructor( private activityService: ActivityService ) {
@@ -50,7 +56,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	getActivities(): void {
 		this.activityService.getActivities()
-			.then( activities => this.activities = activities );
+			.then(activities => {
+				this.activities		= activities;
+				this.nbActivities	= this.activities.length;
+				this.buildPagedActivities();
+			});
 	}
 
 	create( title, activityType, activityTicket ): void {
@@ -104,6 +114,20 @@ export class AppComponent implements OnInit, OnDestroy {
 			.then(activity => {
 				this.activities.push( activity );
 			});
+	}
+
+	onPageChange( offset ) {
+		this.offset = offset;
+
+		this.buildPagedActivities();
+	}
+
+	private buildPagedActivities(): void {
+		Observable.from( this.activities ) // Create observable from your array
+			.skip( this.offset ) // Skip n elements, where n is your offset (eg. 30 if you want to retrieve page 3 with a limit of 15)
+			.take( this.limit ) // Take only n elements, where n is your limit (eg. 15 elements)
+			.toArray() // Create an array of all elements
+			.subscribe( pagedActivities => this.pagedActivities = pagedActivities );
 	}
 
 	private toggleForm(): void {

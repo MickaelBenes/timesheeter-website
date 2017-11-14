@@ -1,7 +1,12 @@
 <ul class="pagination">
-	<li *ngFor="let page of this.pages | async">
-		<a href="javascript:void( 0 )">
-			{{ page }}
-		</a>
+	<li *ngFor="let page of this.pages | async" [class.active]="page == this.currentPage">
+		<div *ngIf="page == this.currentPage; then thenBlock else elseBlock"></div>
+
+		<ng-template #thenBlock>{{ page }}</ng-template>
+		<ng-template #elseBlock>
+			<a href="" (click)="this.selectPage( page, $event )">
+				{{ page }}
+			</a>
+		</ng-template>
 	</li>
 </ul>

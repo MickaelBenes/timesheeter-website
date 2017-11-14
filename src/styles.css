@@ -3,6 +3,11 @@
 	color: #FFFFFF;
 }
 
+::-moz-selection {
+	background-color: darkgoldenrod;
+	color: #FFFFFF;
+}
+
 body {
 	padding: 50px;
 	background-color: #2B2B2B;
