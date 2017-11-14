@@ -5,10 +5,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 
 import { ActivityService} from './service/activity.service';
+import {PaginationComponent} from './pagination/pagination.component';
 
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,
+		PaginationComponent
 	],
 	imports: [
 		BrowserModule, HttpClientModule
