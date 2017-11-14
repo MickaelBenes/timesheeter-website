@@ -131,11 +131,13 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	private refreshActivitiesDuration(): void {
-		this.activities.forEach( activity => {
-			if ( activity.stopTime === null ) {
-				activity.duration = ActivityUtils.getElapsedTimeAsString( activity );
-			}
-		});
+		if ( this.activities != undefined && this.activities.length > 0 ) {
+			this.activities.forEach(activity => {
+				if ( activity.stopTime === null ) {
+					activity.duration = ActivityUtils.getElapsedTimeAsString(activity);
+				}
+			});
+		}
 	}
 
 	private stopActiveActivities(): void {
