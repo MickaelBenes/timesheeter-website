@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Activity } from './domain/Activity';
 import { ActivityService } from './service/activity.service';
@@ -13,7 +13,7 @@ import {ActivityType} from './domain/ActivityType';
 	styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
 
 	title				= 'Activities';
 	redmine				= 'http://redmine.cross-systems.ch/issues/';
@@ -35,32 +35,17 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.getActivities();
 	}
 
-	ngAfterViewInit(): void {
-		// $( function() {
-		// 	$( document ).on('click', function() {
-		// 		$( '.activities tr' ).removeClass( 'selected' );
-		// 	});
-		//
-		// 	$( '.activities td' ).on('click', function() {
-		// 		$( '.activities tr' ).removeClass( 'selected' );
-		// 		$( this ).parent().addClass( 'selected' );
-		// 	});
-		// });
-
-		$(function() {
-			$( '.activities tr' ).focusout(function() {
-				$( this ).removeClass( 'selected' );
-			});
-
-		});
-	}
-
 	ngOnDestroy(): void {
 		clearInterval( this.durationInterval );
 	}
 
 	onSelect( activity: Activity ): void {
-		this.selectedActivity = activity;
+		if ( this.selectedActivity === activity ) {
+			this.selectedActivity = null;
+		}
+		else {
+			this.selectedActivity = activity;
+		}
 	}
 
 	getActivities(): void {
