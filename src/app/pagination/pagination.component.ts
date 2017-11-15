@@ -35,7 +35,7 @@ export class PaginationComponent implements OnInit, AfterViewInit, OnChanges {
 	ngAfterViewInit(): void {
 		$(function() {
 			$( '.pagination li' ).click(function () {
-				console.log( $(this) );
+				// console.log( $(this) );
 				// $( this ).children( 'a' ).trigger( 'click' );
 			});
 		});
