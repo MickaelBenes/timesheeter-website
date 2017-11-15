@@ -57,7 +57,7 @@
 	</div>
 </div>
 
-<ts-activity-pagination [offset]="this.offset" [limit]="this.limit"
+<ts-activity-pagination *ngIf="this.nbActivities > this.limit" [offset]="this.offset" [limit]="this.limit"
 						[size]="this.nbActivities" (pageChange)="this.onPageChange( $event )"></ts-activity-pagination>
 
 <table class="activities">

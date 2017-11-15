@@ -59,8 +59,8 @@ export class AppComponent implements OnInit, OnDestroy {
 			.then(activities => {
 				this.activities		= activities;
 				this.nbActivities	= this.activities.length;
-				this.buildPagedActivities();
-			});
+			})
+			.then( () => this.buildPagedActivities() );
 	}
 
 	create( title, activityType, activityTicket ): void {
@@ -73,7 +73,8 @@ export class AppComponent implements OnInit, OnDestroy {
 				this.activities.push( newActivity );
 				this.toggleForm();
 				this.selectedActivity = null;
-			});
+			})
+			.then( () => this.buildPagedActivities() );
 	}
 
 	update( title, activityType, activityTicket ): void {
@@ -84,7 +85,8 @@ export class AppComponent implements OnInit, OnDestroy {
 				const indexOldAct				= this.activities.indexOf( this.selectedActivity );
 				this.activities[ indexOldAct ]	= updatedAct;
 				this.selectedActivity			= null;
-			});
+			})
+			.then( () => this.buildPagedActivities() );
 	}
 
 	stop( id: number ): void {
@@ -93,7 +95,8 @@ export class AppComponent implements OnInit, OnDestroy {
 				const indexOldAct = this.activities.findIndex( act => act.id === activity.id );
 				this.activities[ indexOldAct ] = activity;
 				this.selectedActivity = null;
-			});
+			})
+			.then( () => this.buildPagedActivities() );
 	}
 
 	delete( id: number ): void {
@@ -104,7 +107,8 @@ export class AppComponent implements OnInit, OnDestroy {
 				if ( this.selectedActivity.id === id ) {
 					this.selectedActivity = null;
 				}
-			});
+			})
+			.then( () => this.buildPagedActivities() );
 	}
 
 	duplicate( id: number ): void  {
@@ -113,7 +117,8 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.activityService.duplicate( id )
 			.then(activity => {
 				this.activities.push( activity );
-			});
+			})
+			.then( () => this.buildPagedActivities() );
 	}
 
 	onPageChange( offset ) {
@@ -143,7 +148,7 @@ export class AppComponent implements OnInit, OnDestroy {
 		if ( this.activities != undefined && this.activities.length > 0 ) {
 			this.activities.forEach(activity => {
 				if ( activity.stopTime === null ) {
-					activity.duration = ActivityUtils.getElapsedTimeAsString(activity);
+					activity.duration = ActivityUtils.getElapsedTimeAsString( activity );
 				}
 			});
 		}
