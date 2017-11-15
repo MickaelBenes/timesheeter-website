@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, DoCheck, KeyValueDiffers } from '@angular/core';
 
 import { Activity } from './domain/Activity';
 import { ActivityService } from './service/activity.service';
@@ -7,6 +7,7 @@ import { ActivityUtils } from './utils/ActivityUtils';
 import {ActivityType} from './domain/ActivityType';
 
 import { Observable } from 'rxjs';
+import {PromiseState} from 'q';
 
 @Component({
 	selector: 'ts-app-root',
@@ -14,35 +15,68 @@ import { Observable } from 'rxjs';
 	styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy, DoCheck {
 
-	title				= 'Activities';
-	redmine				= 'http://redmine.cross-systems.ch/issues/';
-	displayForm			= false;
-	durationInterval	= null;
-	getDateAsString		= ActivityUtils.getDateAsString;
-	activityTypes: Array<ActivityType> = [
+	private title					= 'Activities';
+	private redmine					= 'http://redmine.cross-systems.ch/issues/';
+	private displayForm				= false;
+	private durationInterval		= null;
+	private getDateAsString			= ActivityUtils.getDateAsString;
+	private offset: number			= 0;
+	private limit: number			= 15;
+	private nbActivities: number	= 0;
+
+	private activityTypes: Array<ActivityType> = [
 		new ActivityType( 'Redmine', 'Redmine' )
 	];
 
-	offset: number			= 0;
-	limit: number			= 15;
-	nbActivities: number	= 0;
-
-	activities: Activity[];
-	pagedActivities: Activity[];
+	activities: Activity[]		= [];
+	pagedActivities: Activity[]	= [];
+	objDiffer: any;
 	selectedActivity: Activity;
 
-	constructor( private activityService: ActivityService ) {
+	constructor( private activityService: ActivityService, private differs: KeyValueDiffers ) {
 		this.durationInterval = setInterval( () => this.refreshActivitiesDuration(), 1000 );
 	}
 
 	ngOnInit(): void {
-		this.getActivities();
+		this.objDiffer = {};
+		this.getActivities()
+			.then(() => {
+				this.activities.forEach(act => {
+					this.objDiffer[ act.id ] = this.differs.find( act ).create();
+				});
+			});
 	}
 
 	ngOnDestroy(): void {
 		clearInterval( this.durationInterval );
+	}
+
+	ngDoCheck(): void  {
+		this.activities.forEach(act => {
+			const objDiffer	= this.objDiffer[ act.id ];
+			let objChanged	=  false;
+
+			// console.log( objDiffer );
+			// console.log( this.activities.length, this.nbActivities );
+
+			if ( objDiffer != undefined ) {
+				// console.log( 'not undefined' );
+				objChanged = objDiffer.diff( act );
+			}
+			else {
+				objChanged = true;
+			}
+
+			// console.log( act.id, objChanged )
+
+			if ( objChanged ) {
+				console.log( 'activities changed' );
+				this.nbActivities = this.activities.length;
+				this.buildPagedActivities();
+			}
+		});
 	}
 
 	onSelect( activity: Activity ): void {
@@ -54,13 +88,11 @@ export class AppComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	getActivities(): void {
-		this.activityService.getActivities()
+	getActivities(): Promise<void> {
+		return this.activityService.getActivities()
 			.then(activities => {
-				this.activities		= activities;
-				this.nbActivities	= this.activities.length;
-			})
-			.then( () => this.buildPagedActivities() );
+				this.activities	= activities;
+			});
 	}
 
 	create( title, activityType, activityTicket ): void {
@@ -73,8 +105,7 @@ export class AppComponent implements OnInit, OnDestroy {
 				this.activities.push( newActivity );
 				this.toggleForm();
 				this.selectedActivity = null;
-			})
-			.then( () => this.buildPagedActivities() );
+			});
 	}
 
 	update( title, activityType, activityTicket ): void {
@@ -85,8 +116,7 @@ export class AppComponent implements OnInit, OnDestroy {
 				const indexOldAct				= this.activities.indexOf( this.selectedActivity );
 				this.activities[ indexOldAct ]	= updatedAct;
 				this.selectedActivity			= null;
-			})
-			.then( () => this.buildPagedActivities() );
+			});
 	}
 
 	stop( id: number ): void {
@@ -95,8 +125,7 @@ export class AppComponent implements OnInit, OnDestroy {
 				const indexOldAct = this.activities.findIndex( act => act.id === activity.id );
 				this.activities[ indexOldAct ] = activity;
 				this.selectedActivity = null;
-			})
-			.then( () => this.buildPagedActivities() );
+			});
 	}
 
 	delete( id: number ): void {
@@ -104,11 +133,10 @@ export class AppComponent implements OnInit, OnDestroy {
 			.then(() => {
 				this.activities	= this.activities.filter( a => a.id !== id );
 
-				if ( this.selectedActivity.id === id ) {
+				if ( this.selectedActivity !== null && this.selectedActivity.id === id ) {
 					this.selectedActivity = null;
 				}
-			})
-			.then( () => this.buildPagedActivities() );
+			});
 	}
 
 	duplicate( id: number ): void  {
@@ -117,8 +145,8 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.activityService.duplicate( id )
 			.then(activity => {
 				this.activities.push( activity );
-			})
-			.then( () => this.buildPagedActivities() );
+				this.selectedActivity = activity;
+			});
 	}
 
 	onPageChange( offset ) {
