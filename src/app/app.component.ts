@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy, DoCheck, KeyValueDiffers } from '@angular/core';
 
+import { Observable } from 'rxjs';
+
 import { Activity } from './domain/Activity';
 import { ActivityService } from './service/activity.service';
 import { ActivityUtils } from './utils/ActivityUtils';
-
-import {ActivityType} from './domain/ActivityType';
-
-import { Observable } from 'rxjs';
+import { ActivityType } from './domain/ActivityType';
 
 @Component({
 	selector: 'ts-app-root',
