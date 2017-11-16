@@ -30,7 +30,7 @@ a:hover {
 .content-wrapper {
 	max-width: 1280px;
 	margin: 0 auto;
-	padding: 25px;
+	padding: 0 25px 25px 25px;
 	background-color: #595959;
 	border: 1px solid #e6eaef;
 	-webkit-border-radius: 5px;
