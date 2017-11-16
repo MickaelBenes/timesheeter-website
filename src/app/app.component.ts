@@ -74,7 +74,6 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 					const objChanged = objDiffer.diff( act );
 
 					if ( objChanged !== null && typeof objChanged === 'object' ) {
-						this.selectedActivity = null;
 						this.buildPagedActivities();
 					}
 				}

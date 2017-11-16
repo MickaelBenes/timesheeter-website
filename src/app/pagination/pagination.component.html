@@ -1,4 +1,10 @@
 <ul class="pagination">
+	<li (click)="this.selectPage( 1, $event )" [class.disabled]="this.currentPage == 1">
+		<a href="" title="Go to first page">&laquo;</a>
+	</li>
+	<li (click)="this.selectPage( this.currentPage - 1, $event )" [class.disabled]="this.currentPage == 1">
+		<a href="">&lsaquo;</a>
+	</li>
 	<li *ngFor="let page of this.pages | async" [class.active]="page == this.currentPage">
 		<div *ngIf="page == this.currentPage; then displaySelectedPage else displayPageLink"></div>
 
@@ -8,5 +14,11 @@
 				{{ page }}
 			</a>
 		</ng-template>
+	</li>
+	<li (click)="this.selectPage( this.currentPage + 1, $event )" [class.disabled]="this.currentPage == this.totalPages">
+		<a href="">&rsaquo;</a>
+	</li>
+	<li (click)="this.selectPage( this.totalPages, $event )" [class.disabled]="this.currentPage == this.totalPages">
+		<a href="" title="Go to first page">&raquo;</a>
 	</li>
 </ul>
