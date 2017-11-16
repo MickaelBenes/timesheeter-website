@@ -117,6 +117,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 			.then(updatedAct => {
 				const indexOldAct				= this.activities.indexOf( this.selectedActivity );
 				this.activities[ indexOldAct ]	= updatedAct;
+				this.selectedActivity			= null;
 			});
 	}
 
@@ -140,6 +141,10 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 				const delActIndex = this.activities.findIndex( a => a.id === id );
 				this.activities.splice( delActIndex, 1 );
 				this.objDiffer.splice( id, 1 );
+
+				if ( this.selectedActivity.id === id ) {
+					this.selectedActivity = null;
+				}
 			});
 	}
 
@@ -175,6 +180,8 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 		else {
 			this.displayForm = false;
 		}
+
+		this.selectedActivity = null;
 	}
 
 	private refreshActivitiesDuration(): void {
