@@ -6,11 +6,19 @@ import { Activity } from './domain/Activity';
 import { ActivityService } from './service/activity.service';
 import { ActivityUtils } from './utils/ActivityUtils';
 import { ActivityType } from './domain/ActivityType';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
 	selector: 'ts-app-root',
 	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.css']
+	styleUrls: ['./app.component.css'],
+	animations: [
+		trigger('formActivity', [
+			state( 'void', style( {height: 0} ) ),
+			state( '*', style( {height: 248} ) ),
+			transition('void <=> *', animate('500ms ease-in') )
+		])
+	]
 })
 
 export class AppComponent implements OnInit, OnDestroy, DoCheck {

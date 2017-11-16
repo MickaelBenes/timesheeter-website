@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 
 import { ActivityService} from './service/activity.service';
 import { PaginationComponent } from './pagination/pagination.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
 	declarations: [
@@ -13,7 +14,7 @@ import { PaginationComponent } from './pagination/pagination.component';
 		PaginationComponent
 	],
 	imports: [
-		BrowserModule, HttpClientModule
+		BrowserModule, HttpClientModule, BrowserAnimationsModule
 	],
 	providers: [ ActivityService ],
 	bootstrap: [ AppComponent ]

@@ -2,7 +2,7 @@
 
 <button class="btn btn-action mt-4 mb-4" *ngIf="!displayForm" (click)="this.toggleForm()">New activity</button>
 
-<div class="activity-form mt-4 mb-4" *ngIf="displayForm">
+<div class="activity-form mt-4 mb-4" *ngIf="displayForm" [@formActivity]="this.displayForm">
 	<div class="form-group">
 		<input #title required="required">
 		<span class="bar"></span>
