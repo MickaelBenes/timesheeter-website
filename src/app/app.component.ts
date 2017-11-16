@@ -58,7 +58,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 			this.selectedActivity	= null;
 			this.nbActivities		= this.activities.length;
 
-			if ( this.nbActivities % this.limit === 1 && hasMoreActivities ) { // means we just created a new page
+			if ( (this.nbActivities % this.limit === 1) && hasMoreActivities ) { // means we just created a new page
 				this.offset += this.limit;
 			}
 			else if ( (this.nbActivities % this.limit === 0) && !hasMoreActivities ) { // means we just removed a page
@@ -84,8 +84,6 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 	}
 
 	onSelect( activity: Activity ): void {
-		console.log( 'select triggered', activity.id );
-
 		if ( this.selectedActivity === activity ) {
 			this.selectedActivity = null;
 		}
