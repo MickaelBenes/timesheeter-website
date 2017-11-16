@@ -54,8 +54,17 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 
 	ngDoCheck(): void {
 		if ( this.activities.length !== this.nbActivities ) {
+			const hasMoreActivities = this.activities.length > this.nbActivities;
 			this.selectedActivity	= null;
 			this.nbActivities		= this.activities.length;
+
+			if ( this.nbActivities % this.limit === 1 && hasMoreActivities ) { // means we just created a new page
+				this.offset += this.limit;
+			}
+			else if ( (this.nbActivities % this.limit === 0) && !hasMoreActivities ) { // means we just removed a page
+				this.offset -= this.limit;
+			}
+
 			this.buildPagedActivities();
 		}
 		else {
@@ -157,8 +166,8 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 
 	private buildPagedActivities(): void {
 		Observable.from( this.activities ) // Create observable from your array
-			.skip( this.offset ) // Skip n elements, where n is your offset (eg. 30 if you want to retrieve page 3 with a limit of 15)
-			.take( this.limit ) // Take only n elements, where n is your limit (eg. 15 elements)
+			.skip( this.offset ) // Skip n elements, where n is your offset (eg. 30 if you want to retrieve page 4 with a limit of 10)
+			.take( this.limit ) // Take only n elements, where n is your limit (eg. 10 elements)
 			.toArray() // Create an array of all elements
 			.subscribe( pagedActivities => this.pagedActivities = pagedActivities );
 	}
