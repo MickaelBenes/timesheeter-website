@@ -54,7 +54,8 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 
 	ngDoCheck(): void {
 		if ( this.activities.length !== this.nbActivities ) {
-			this.nbActivities	= this.activities.length;
+			this.selectedActivity	= null;
+			this.nbActivities		= this.activities.length;
 			this.buildPagedActivities();
 		}
 		else {
@@ -65,6 +66,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 					const objChanged = objDiffer.diff( act );
 
 					if ( objChanged !== null && typeof objChanged === 'object' ) {
+						this.selectedActivity = null;
 						this.buildPagedActivities();
 					}
 				}
@@ -73,6 +75,8 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 	}
 
 	onSelect( activity: Activity ): void {
+		console.log( 'select triggered', activity.id );
+
 		if ( this.selectedActivity === activity ) {
 			this.selectedActivity = null;
 		}
@@ -108,38 +112,40 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 			.then(updatedAct => {
 				const indexOldAct				= this.activities.indexOf( this.selectedActivity );
 				this.activities[ indexOldAct ]	= updatedAct;
-				this.selectedActivity			= null;
 			});
 	}
 
-	stop( id: number ): void {
+	stop( event, id: number ): void {
+		if ( event !== null ) {
+			event.stopPropagation();
+		}
+
 		this.activityService.stop( id )
 			.then(activity => {
 				const indexOldAct = this.activities.findIndex( act => act.id === activity.id );
 				this.activities[ indexOldAct ] = activity;
-				this.selectedActivity = null;
 			});
 	}
 
-	delete( id: number ): void {
+	delete( event, id: number ): void {
+		event.stopPropagation();
+
 		this.activityService.delete( id )
 			.then(() => {
 				const delActIndex = this.activities.findIndex( a => a.id === id );
 				this.activities.splice( delActIndex, 1 );
 				this.objDiffer.splice( id, 1 );
-
-				this.selectedActivity = null;
 			});
 	}
 
-	duplicate( id: number ): void  {
+	duplicate( event, id: number ): void  {
+		event.stopPropagation();
 		this.stopActiveActivities();
 
 		this.activityService.duplicate( id )
 			.then(activity => {
 				this.activities.push( activity );
 				this.objDiffer[ activity.id ] = this.differs.find( activity ).create();
-				this.selectedActivity = null;
 			});
 	}
 
@@ -179,7 +185,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 	private stopActiveActivities(): void {
 		this.activities.forEach(activity => {
 			if ( activity.stopTime === null ) {
-				this.stop( activity.id );
+				this.stop( null, activity.id );
 			}
 		});
 	}
