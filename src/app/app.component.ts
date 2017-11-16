@@ -7,7 +7,6 @@ import { ActivityUtils } from './utils/ActivityUtils';
 import {ActivityType} from './domain/ActivityType';
 
 import { Observable } from 'rxjs';
-import {PromiseState} from 'q';
 
 @Component({
 	selector: 'ts-app-root',
@@ -23,7 +22,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 	private durationInterval		= null;
 	private getDateAsString			= ActivityUtils.getDateAsString;
 	private offset: number			= 0;
-	private limit: number			= 15;
+	private limit: number			= 10;
 	private nbActivities: number	= 0;
 
 	private activityTypes: Array<ActivityType> = [
@@ -40,11 +39,11 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 	}
 
 	ngOnInit(): void {
-		this.objDiffer = {};
+		this.objDiffer = [];
 		this.getActivities()
 			.then(() => {
 				this.activities.forEach(act => {
-					this.objDiffer[ act.id ] = this.differs.find( act ).create();
+					this.objDiffer[ act.id ] = this.differs.find( act ).create( null );
 				});
 			});
 	}
@@ -53,30 +52,24 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 		clearInterval( this.durationInterval );
 	}
 
-	ngDoCheck(): void  {
-		this.activities.forEach(act => {
-			const objDiffer	= this.objDiffer[ act.id ];
-			let objChanged	=  false;
+	ngDoCheck(): void {
+		if ( this.activities.length !== this.nbActivities ) {
+			this.nbActivities	= this.activities.length;
+			this.buildPagedActivities();
+		}
+		else {
+			this.activities.forEach(act => {
+				const objDiffer = this.objDiffer[ act.id ];
 
-			// console.log( objDiffer );
-			// console.log( this.activities.length, this.nbActivities );
+				if ( objDiffer !== undefined ) {
+					const objChanged = objDiffer.diff( act );
 
-			if ( objDiffer != undefined ) {
-				// console.log( 'not undefined' );
-				objChanged = objDiffer.diff( act );
-			}
-			else {
-				objChanged = true;
-			}
-
-			// console.log( act.id, objChanged )
-
-			if ( objChanged ) {
-				console.log( 'activities changed' );
-				this.nbActivities = this.activities.length;
-				this.buildPagedActivities();
-			}
-		});
+					if ( objChanged !== null && typeof objChanged === 'object' ) {
+						this.buildPagedActivities();
+					}
+				}
+			});
+		}
 	}
 
 	onSelect( activity: Activity ): void {
@@ -104,7 +97,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 			.then(newActivity => {
 				this.activities.push( newActivity );
 				this.toggleForm();
-				this.selectedActivity = null;
+				this.objDiffer[ newActivity.id ] = this.differs.find( newActivity ).create();
 			});
 	}
 
@@ -131,11 +124,11 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 	delete( id: number ): void {
 		this.activityService.delete( id )
 			.then(() => {
-				this.activities	= this.activities.filter( a => a.id !== id );
+				const delActIndex = this.activities.findIndex( a => a.id === id );
+				this.activities.splice( delActIndex, 1 );
+				this.objDiffer.splice( id, 1 );
 
-				if ( this.selectedActivity !== null && this.selectedActivity.id === id ) {
-					this.selectedActivity = null;
-				}
+				this.selectedActivity = null;
 			});
 	}
 
@@ -145,7 +138,8 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 		this.activityService.duplicate( id )
 			.then(activity => {
 				this.activities.push( activity );
-				this.selectedActivity = activity;
+				this.objDiffer[ activity.id ] = this.differs.find( activity ).create();
+				this.selectedActivity = null;
 			});
 	}
 
@@ -173,7 +167,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 	}
 
 	private refreshActivitiesDuration(): void {
-		if ( this.activities != undefined && this.activities.length > 0 ) {
+		if ( this.activities !== null && this.activities.length > 0 ) {
 			this.activities.forEach(activity => {
 				if ( activity.stopTime === null ) {
 					activity.duration = ActivityUtils.getElapsedTimeAsString( activity );
