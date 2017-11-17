@@ -1,8 +1,8 @@
 <h1 class="main-title">{{ this.title }}</h1>
 
-<button class="btn btn-action mt-4 mb-4" *ngIf="!displayForm" (click)="this.toggleForm()">New activity</button>
+<button class="btn btn-action mt-4 mb-4" (click)="this.toggleForm()">New activity</button>
 
-<div class="activity-form mt-4 mb-4" *ngIf="displayForm" [@formActivity]="this.displayForm">
+<div class="activity-form mb-4" *ngIf="displayForm" [@formActivity]="this.displayForm">
 	<div class="form-group">
 		<input #title required="required">
 		<span class="bar"></span>
@@ -27,7 +27,7 @@
 	</div>
 </div>
 
-<div class="activity-form mt-4 mb-4" *ngIf="this.selectedActivity != null">
+<div class="activity-form mb-4" *ngIf="this.selectedActivity != null" [@formActivity]="this.selectedActivity != null">
 	<div class="form-group">
 		<input #title required="required" value="{{ this.selectedActivity.title }}">
 		<span class="bar"></span>
