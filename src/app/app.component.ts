@@ -61,15 +61,19 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 
 	ngDoCheck(): void {
 		if ( this.activities.length !== this.nbActivities ) {
+			console.log( 'change in activities array' );
+
 			const hasMoreActivities = this.activities.length > this.nbActivities;
 			this.selectedActivity	= null;
 			this.nbActivities		= this.activities.length;
 
-			if ( (this.nbActivities % this.limit === 1) && hasMoreActivities ) { // means we just created a new page
-				this.offset += this.limit;
-			}
-			else if ( (this.nbActivities % this.limit === 0) && !hasMoreActivities ) { // means we just removed a page
-				this.offset -= this.limit;
+			if ( this.nbActivities > 1 ) {
+				if ( (this.nbActivities % this.limit === 1) && hasMoreActivities ) { // means we just created a new page
+					this.offset += this.limit;
+				}
+				else if ( (this.nbActivities % this.limit === 0) && !hasMoreActivities ) { // means we just removed a page
+					this.offset -= this.limit;
+				}
 			}
 
 			this.buildPagedActivities();
