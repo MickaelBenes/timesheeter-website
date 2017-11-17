@@ -15,7 +15,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 	animations: [
 		trigger('formActivity', [
 			state( 'void', style( {'max-height': 0} ) ),
-			state( '*', style( {'max-height': 248} ) ),
+			state( '*', style( {'max-height': 250} ) ),
 			transition('void <=> *', animate('500ms ease-in') )
 		])
 	]
@@ -61,8 +61,6 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 
 	ngDoCheck(): void {
 		if ( this.activities.length !== this.nbActivities ) {
-			console.log( 'change in activities array' );
-
 			const hasMoreActivities = this.activities.length > this.nbActivities;
 			this.selectedActivity	= null;
 			this.nbActivities		= this.activities.length;
