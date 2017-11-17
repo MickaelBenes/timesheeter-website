@@ -6,7 +6,7 @@ import { Activity } from './domain/Activity';
 import { ActivityService } from './service/activity.service';
 import { ActivityUtils } from './utils/ActivityUtils';
 import { ActivityType } from './domain/ActivityType';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
 	selector: 'ts-app-root',
@@ -14,9 +14,12 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 	styleUrls: ['./app.component.css'],
 	animations: [
 		trigger('formActivity', [
-			state( 'void', style( {'max-height': 0} ) ),
-			state( '*', style( {'max-height': 250} ) ),
-			transition('void <=> *', animate('500ms ease-in') )
+			state( 'void', style({'max-height': 0}) ),
+			state( '*', style({'max-height': 250}) ),
+			transition(
+				'void <=> *',
+				animate( '500ms ease-in' )
+			)
 		])
 	]
 })
