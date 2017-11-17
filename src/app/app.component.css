@@ -31,6 +31,7 @@
 
 .activities tbody tr {
 	white-space: nowrap;
+	transition: .3s;
 }
 
 .activities tbody tr:nth-child(odd) {
