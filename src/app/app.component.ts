@@ -150,7 +150,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 				this.activities.splice( delActIndex, 1 );
 				this.objDiffer.splice( id, 1 );
 
-				if ( this.selectedActivity.id === id ) {
+				if ( this.selectedActivity !== null && this.selectedActivity.id === id ) {
 					this.selectedActivity = null;
 				}
 			});
