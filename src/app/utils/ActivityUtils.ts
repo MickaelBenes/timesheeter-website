@@ -4,20 +4,20 @@ import { DateUtils } from './DateUtils';
 export class ActivityUtils {
 
 	static getDateAsString( activity: Activity ): string {
-		return activity.startTime.year + '-'
-			+ DateUtils.formatDateTimeUnit( activity.startTime.monthValue ) + '-'
-			+ DateUtils.formatDateTimeUnit( activity.startTime.dayOfMonth );
+		return activity.startTime[ 0 ] + '-'
+			+ DateUtils.formatDateTimeUnit( activity.startTime[1] ) + '-'
+			+ DateUtils.formatDateTimeUnit( activity.startTime[2] );
 	}
 
 	static getElapsedTimeAsString( activity: Activity ): any {
 		const now		= new Date();
 		const startTime	= new Date(
-			activity.startTime.year,
-			activity.startTime.monthValue - 1,
-			activity.startTime.dayOfMonth,
-			activity.startTime.hour,
-			activity.startTime.minute,
-			activity.startTime.second
+			activity.startTime[ 0 ],
+			activity.startTime[ 1 ] - 1,
+			activity.startTime[ 2 ],
+			activity.startTime[ 3 ],
+			activity.startTime[ 4 ],
+			activity.startTime[ 5 ]
 		);
 		const difference	= now.getTime() - startTime.getTime();
 		const seconds		= Math.floor( difference / 1000 );
