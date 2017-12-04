@@ -15,7 +15,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 	animations: [
 		trigger('formActivity', [
 			state( 'void', style({'max-height': 0, 'padding': 0}) ),
-			state( '*', style({'max-height': 250, 'padding': '10px'}) ),
+			state( '*', style({'max-height': 250, 'padding': '20px 10px'}) ),
 			transition(
 				'void <=> *',
 				animate( '500ms ease-in' )
@@ -26,21 +26,19 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 
 export class AppComponent implements OnInit, OnDestroy, DoCheck {
 
-	private title					= 'Activities';
-	private redmine					= 'http://redmine.cross-systems.ch/issues/';
-	private displayForm				= false;
-	private durationInterval		= null;
-	private getDateAsString			= ActivityUtils.getDateAsString;
-	private offset: number			= 0;
-	private limit: number			= 10;
-	private nbActivities: number	= 0;
-
-	private activityTypes: Array<ActivityType> = [
+	title								= 'Activities';
+	getDateAsString						= ActivityUtils.getDateAsString;
+	redmine								= 'http://redmine.cross-systems.ch/issues/';
+	displayForm							= false;
+	durationInterval					= null;
+	offset: number						= 0;
+	limit: number						= 10;
+	nbActivities: number				= 0;
+	activities: Activity[]				= [];
+	pagedActivities: Activity[]			= [];
+	activityTypes: Array<ActivityType>	= [
 		new ActivityType( 'Redmine', 'Redmine' )
 	];
-
-	activities: Activity[]		= [];
-	pagedActivities: Activity[]	= [];
 	objDiffer: any;
 	selectedActivity: Activity;
 
