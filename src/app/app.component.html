@@ -11,7 +11,9 @@
 	<div class="form-group">
 		<select #activityType required="required">
 			<option value="">Select an activity type...</option>
-			<option value="Redmine">Redmine</option>
+			<option *ngFor="let actType of this.activityTypes" value="{{ actType.id }}">
+				{{ actType.name }}
+			</option>
 		</select>
 		<span class="highlight"></span>
 		<span class="bar"></span>
