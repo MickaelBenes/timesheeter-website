@@ -29,7 +29,7 @@
 	</div>
 </div>
 
-<div class="activity-form mb-4" *ngIf="this.selectedActivity != null" [@formActivity]="this.selectedActivity != null">
+<div class="activity-form mb-4" *ngIf="this.selectedActivity" [@formActivity]="this.selectedActivity">
 	<div class="form-group">
 		<input #title required="required" value="{{ this.selectedActivity.title }}">
 		<span class="bar"></span>
