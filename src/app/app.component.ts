@@ -27,8 +27,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 export class AppComponent implements OnInit, OnDestroy, DoCheck {
 
 	title								= 'Activities';
-	getDateAsString						= ActivityUtils.getDateAsString;
-	getDateTimeAsString					= ActivityUtils.getDateTimeAsString;
+	ActivityUtils						= ActivityUtils;
 	redmine								= 'http://redmine.cross-systems.ch/issues/';
 	displayForm							= false;
 	durationInterval					= null;
