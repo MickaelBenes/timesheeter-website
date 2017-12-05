@@ -132,6 +132,7 @@ a:hover {
 
 .form-group {
 	position: relative;
+	margin: 15px;
 }
 
 .form-group:not(:first-child:last-child) {

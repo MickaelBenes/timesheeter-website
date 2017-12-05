@@ -14,8 +14,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 	styleUrls: ['./app.component.css'],
 	animations: [
 		trigger('formActivity', [
-			state( 'void', style({'max-height': 0, 'padding': 0}) ),
-			state( '*', style({'max-height': 250, 'padding': '20px 10px'}) ),
+			state( 'void', style({'width': 0, 'max-height': 0}) ),
+			state( '*', style({'width': '50%', 'max-height': 250}) ),
 			transition(
 				'void <=> *',
 				animate( '500ms ease-in' )
