@@ -27,7 +27,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 export class AppComponent implements OnInit, OnDestroy, DoCheck {
 
 	title								= 'Activities';
-	ActivityUtils						= ActivityUtils;
+	activityUtils						= ActivityUtils;
 	redmine								= 'http://redmine.cross-systems.ch/issues/';
 	displayForm							= false;
 	durationInterval					= null;
@@ -201,7 +201,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 		if ( this.activities !== null && this.activities.length > 0 ) {
 			this.activities.forEach(activity => {
 				if ( activity.stopTime === null ) {
-					activity.duration = ActivityUtils.getElapsedTimeAsString( activity );
+					activity.duration = this.activityUtils.getElapsedTimeAsString( activity );
 				}
 			});
 		}

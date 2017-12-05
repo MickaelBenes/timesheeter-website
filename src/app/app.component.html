@@ -83,8 +83,8 @@
 					{{ activity.activityType }} #{{ activity.activityTicket }}
 				</a>
 			</td>
-			<td [title]="ActivityUtils.getDateTimeAsString(activity)">
-				{{ ActivityUtils.getDateAsString(activity) }}
+			<td [title]="activityUtils.getDateTimeAsString(activity)">
+				{{ activityUtils.getDateAsString(activity) }}
 			</td>
 			<td>{{ activity.duration }}</td>
 			<td>
