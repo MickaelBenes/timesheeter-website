@@ -3,6 +3,16 @@ import { DateUtils } from './DateUtils';
 
 export class ActivityUtils {
 
+	static wrapActivity( actObj: Activity ): Activity {
+		const activity		= new Activity( actObj.title, actObj.activityType, actObj.activityTicket );
+		activity.id			= actObj.id;
+		activity.startTime	= actObj.startTime;
+		activity.stopTime	= actObj.stopTime;
+		activity.duration	= actObj.duration;
+
+		return activity;
+	}
+
 	static getDateAsString( activity: Activity ): string {
 		return activity.startTime[ 0 ] + '-'
 			+ DateUtils.formatDateTimeUnit( activity.startTime[1] ) + '-'

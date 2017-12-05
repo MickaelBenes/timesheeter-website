@@ -106,7 +106,10 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 	getActivities(): Promise<void> {
 		return this.activityService.getActivities()
 			.then(activities => {
-				this.activities	= activities;
+				activities.forEach(act => {
+					const activity = ActivityUtils.wrapActivity( act );
+					this.activities.push( activity );
+				});
 			});
 	}
 
@@ -116,10 +119,13 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 		const activity = new Activity( title.trim(), activityType, activityTicket );
 
 		this.activityService.create( activity )
-			.then(newActivity => {
-				this.activities.push( newActivity );
+			.then(act => {
+				const activity = ActivityUtils.wrapActivity( act );
+
+				this.activities.push( activity );
 				this.toggleForm();
-				this.objDiffer[ newActivity.id ] = this.differs.find( newActivity ).create();
+
+				this.objDiffer[ activity.id ] = this.differs.find( activity ).create();
 			});
 	}
 
@@ -127,9 +133,10 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 		const activity = new Activity( title.trim(), activityType, activityTicket );
 
 		this.activityService.update( this.selectedActivity.id, activity )
-			.then(updatedAct => {
+			.then(act => {
+				const activity					= ActivityUtils.wrapActivity( act );
 				const indexOldAct				= this.activities.indexOf( this.selectedActivity );
-				this.activities[ indexOldAct ]	= updatedAct;
+				this.activities[ indexOldAct ]	= activity;
 				this.selectedActivity			= null;
 			});
 	}
@@ -142,7 +149,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 		this.activityService.stop( id )
 			.then(activity => {
 				const indexOldAct = this.activities.findIndex( act => act.id === activity.id );
-				this.activities[ indexOldAct ] = activity;
+				this.activities[ indexOldAct ] = ActivityUtils.wrapActivity( activity );
 			});
 	}
 
@@ -166,7 +173,9 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 		this.stopActiveActivities();
 
 		this.activityService.duplicate( id )
-			.then(activity => {
+			.then(act => {
+				const activity	= ActivityUtils.wrapActivity( act );
+
 				this.activities.push( activity );
 				this.objDiffer[ activity.id ] = this.differs.find( activity ).create();
 			});
@@ -200,7 +209,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 	private refreshActivitiesDuration(): void {
 		if ( this.activities !== null && this.activities.length > 0 ) {
 			this.activities.forEach(activity => {
-				if ( activity.stopTime === null ) {
+				if ( activity.isActive() ) {
 					activity.duration = this.activityUtils.getElapsedTimeAsString( activity );
 				}
 			});
@@ -209,7 +218,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 
 	private stopActiveActivities(): void {
 		this.activities.forEach(activity => {
-			if ( activity.stopTime === null ) {
+			if ( !activity.isActive() ) {
 				this.stop( null, activity.id );
 			}
 		});
