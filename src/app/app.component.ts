@@ -93,6 +93,8 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 	}
 
 	onSelect( activity: Activity ): void {
+		this.displayForm = false;
+
 		if ( this.selectedActivity === activity ) {
 			this.selectedActivity = null;
 		}
