@@ -2,7 +2,7 @@
 
 <button class="btn btn-action mt-4 mb-4" (click)="this.toggleForm()">New activity</button>
 
-<div class="activity-form" *ngIf="displayForm" [@formActivity]="this.displayForm">
+<div class="activity-form mb-4" *ngIf="displayForm" [@formActivity]="this.displayForm">
 	<div class="form-group">
 		<input #title required="required">
 		<span class="bar"></span>
@@ -27,7 +27,7 @@
 	</div>
 </div>
 
-<div class="activity-form" *ngIf="this.selectedActivity != null" [@formActivity]="this.selectedActivity != null">
+<div class="activity-form mb-4" *ngIf="this.selectedActivity != null" [@formActivity]="this.selectedActivity != null">
 	<div class="form-group">
 		<input #title required="required" value="{{ this.selectedActivity.title }}">
 		<span class="bar"></span>
@@ -60,7 +60,7 @@
 <ts-activity-pagination *ngIf="this.nbActivities > this.limit" [offset]="this.offset" [limit]="this.limit"
 						[size]="this.nbActivities" (pageChange)="this.onPageChange( $event )"></ts-activity-pagination>
 
-<table class="activities mt-4">
+<table class="activities">
 	<thead>
 		<tr>
 			<th>ID</th>
