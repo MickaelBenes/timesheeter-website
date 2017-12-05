@@ -1,16 +1,24 @@
+.pagination-container {
+	display: flex;
+	justify-content: flex-end;
+}
+
 .pagination li {
 	-webkit-user-select: none;  /* Chrome all / Safari all */
 	-moz-user-select: none;     /* Firefox all */
 	-ms-user-select: none;      /* IE 10+ */
 	user-select: none;          /* Likely future */
-	margin-right: 5px;
 	width: 30px;
 	border: 1px solid #FFFFFF;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+	-webkit-border-radius: .25rem;
+	-moz-border-radius: .25rem;
+	border-radius: .25rem;
 	background-color: #333333;
 	text-align: center;
+}
+
+.pagination li:not(:last-child) {
+	margin-right: 5px;
 }
 
 .pagination li:hover {

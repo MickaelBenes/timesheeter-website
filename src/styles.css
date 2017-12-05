@@ -33,9 +33,9 @@ a:hover {
 	padding: 0 25px 25px 25px;
 	background-color: #595959;
 	border: 1px solid #e6eaef;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+	-webkit-border-radius: .50rem;
+	-moz-border-radius: .50rem;
+	border-radius: .50rem;
 }
 
 .btn {
@@ -44,7 +44,7 @@ a:hover {
 	margin: 5px 0;
 	padding: 5px 10px;
 	border: none;
-	border-radius: 20px;
+	border-radius: .25rem;
 	background-color: #f2f2f2;
 	color: #333333;
 	text-transform: uppercase;
