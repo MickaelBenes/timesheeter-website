@@ -83,7 +83,7 @@
 					{{ activity.activityType }} #{{ activity.activityTicket }}
 				</a>
 			</td>
-			<td>{{ this.getDateAsString(activity) }}</td>
+			<td [title]="this.getDateTimeAsString(activity)">{{ this.getDateAsString(activity) }}</td>
 			<td>{{ activity.duration }}</td>
 			<td>
 				<button class="btn btn-mini btn-mini-action"

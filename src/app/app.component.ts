@@ -28,6 +28,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 
 	title								= 'Activities';
 	getDateAsString						= ActivityUtils.getDateAsString;
+	getDateTimeAsString					= ActivityUtils.getDateTimeAsString;
 	redmine								= 'http://redmine.cross-systems.ch/issues/';
 	displayForm							= false;
 	durationInterval					= null;

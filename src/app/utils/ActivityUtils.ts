@@ -9,6 +9,12 @@ export class ActivityUtils {
 			+ DateUtils.formatDateTimeUnit( activity.startTime[2] );
 	}
 
+	static getDateTimeAsString( activity: Activity ): string {
+		return this.getDateAsString( activity ) + ' '
+			+ DateUtils.formatDateTimeUnit( activity.startTime[3] ) + ':'
+			+ DateUtils.formatDateTimeUnit( activity.startTime[4] );
+	}
+
 	static getElapsedTimeAsString( activity: Activity ): any {
 		const now		= new Date();
 		const startTime	= new Date(
