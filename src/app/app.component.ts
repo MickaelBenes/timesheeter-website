@@ -218,7 +218,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 
 	private stopActiveActivities(): void {
 		this.activities.forEach(activity => {
-			if ( !activity.isActive() ) {
+			if ( activity.isActive() ) {
 				this.stop( null, activity.id );
 			}
 		});
