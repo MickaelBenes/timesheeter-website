@@ -8,7 +8,7 @@ import { Activity } from '../domain/Activity';
 @Injectable()
 export class ActivityService {
 
-	private apiUrl		= 'http://localhost:50000/activities';
+	private endpoint	= 'http://localhost:50000/activities';
 	private httpOpts	= {
 		headers: new HttpHeaders({
 			'Authorization': 'Basic dXNlcjpwYXNz',
@@ -26,14 +26,14 @@ export class ActivityService {
 	}
 
 	getActivities(): Promise<Activity[]> {
-		return this.http.get( this.apiUrl, this.httpOpts )
+		return this.http.get( this.endpoint, this.httpOpts )
 			.toPromise()
 			.then( response => response as Activity[] )
 			.catch( this.handleError );
 	}
 
 	getActivity( id: number ): Promise<Activity> {
-		const url = `${ this.apiUrl }/${ id }`;
+		const url = `${ this.endpoint }/${ id }`;
 
 		return this.http.get( url, this.httpOpts )
 			.toPromise()
@@ -42,14 +42,14 @@ export class ActivityService {
 	}
 
 	create( activity: Activity ): Promise<Activity> {
-		return this.http.post( this.apiUrl, JSON.stringify(activity), this.httpOpts )
+		return this.http.post( this.endpoint, JSON.stringify(activity), this.httpOpts )
 			.toPromise()
 			.then( response => response as Activity )
 			.catch( this.handleError );
 	}
 
 	stop( id: number ): Promise<Activity> {
-		const url = `${ this.apiUrl }/${ id }/stop`;
+		const url = `${ this.endpoint }/${ id }/stop`;
 
 		return this.http.post( url, null, this.httpOpts )
 			.toPromise()
@@ -58,7 +58,7 @@ export class ActivityService {
 	}
 
 	update( id: number, activity: Activity ): Promise<Activity> {
-		const url = `${ this.apiUrl }/${ id }`;
+		const url = `${ this.endpoint }/${ id }`;
 
 		return this.http.patch( url, JSON.stringify(activity), this.httpOpts )
 			.toPromise()
@@ -67,7 +67,7 @@ export class ActivityService {
 	}
 
 	delete( id: number ): Promise<void> {
-		const url = `${ this.apiUrl }/${ id }`;
+		const url = `${ this.endpoint }/${ id }`;
 
 		return this.http.delete( url, this.httpOpts )
 			.toPromise()
@@ -76,7 +76,7 @@ export class ActivityService {
 	}
 
 	duplicate( id: number ): Promise<Activity> {
-		const url = `${ this.apiUrl }/startFrom/${ id }`;
+		const url = `${ this.endpoint }/startFrom/${ id }`;
 
 		return this.http.post( url, null, this.httpOpts )
 			.toPromise()
