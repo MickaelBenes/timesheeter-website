@@ -12,7 +12,7 @@ body {
 	padding: 25px 50px;
 	background-color: #2B2B2B;
 	color: #f2f2f2;
-	font-size: 14px;
+	font-size: 15px;
 }
 
 a {
@@ -42,7 +42,6 @@ a:hover {
 .btn {
 	position: relative;
 	display: inline-block;
-	margin: 5px 0;
 	padding: 5px 10px;
 	border: none;
 	border-radius: .25rem;
