@@ -1,7 +1,5 @@
-import { Component, OnInit, AfterViewInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
-import * as $ from 'jquery';
 
 @Component({
 	selector: 'ts-activity-pagination',
@@ -9,7 +7,7 @@ import * as $ from 'jquery';
 	styleUrls: ['pagination.component.css']
 })
 
-export class PaginationComponent implements OnInit, AfterViewInit, OnChanges {
+export class PaginationComponent implements OnInit, OnChanges {
 
 	@Input() offset	= 0;
 	@Input() limit	= 1;
@@ -30,15 +28,6 @@ export class PaginationComponent implements OnInit, AfterViewInit, OnChanges {
 
 	ngOnChanges(): void {
 		this.getPages( this.offset, this.limit, this.size );
-	}
-
-	ngAfterViewInit(): void {
-		$(function() {
-			$( '.pagination li' ).click(function () {
-				// console.log( $(this) );
-				// $( this ).children( 'a' ).trigger( 'click' );
-			});
-		});
 	}
 
 	getPages( offset: number, limit: number, size: number ): void {
