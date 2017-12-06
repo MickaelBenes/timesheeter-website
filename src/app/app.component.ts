@@ -32,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 	displayForm							= false;
 	durationInterval					= null;
 	offset: number						= 0;
-	limit: number						= 10;
+	limit: number						= 15;
 	nbActivities: number				= 0;
 	activities: Activity[]				= [];
 	pagedActivities: Activity[]			= [];
