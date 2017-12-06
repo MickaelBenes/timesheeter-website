@@ -76,7 +76,7 @@ export class ActivityService {
 	}
 
 	duplicate( id: number ): Promise<Activity> {
-		const url = `${ this.endpoint }/startFrom/${ id }`;
+		const url = `${ this.endpoint }/${ id }/duplicate`;
 
 		return this.http.post( url, null, this.httpOpts )
 			.toPromise()
