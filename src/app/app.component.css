@@ -10,7 +10,7 @@
 	border-color: inherit;
 }
 
-.activities thead tr, .activities tfoot tr {
+.activities thead tr {
 	border-top: 1px solid #e6eaef !important;
 	border-bottom: 1px solid #e6eaef !important;
 }
@@ -35,6 +35,7 @@
 .activities tbody tr {
 	white-space: nowrap;
 	transition: .3s;
+	border-bottom: 1px solid #e6eaef !important;
 }
 
 .activities tbody tr:nth-child(odd) {
@@ -52,10 +53,6 @@
 
 .activities tbody tr.selected td a {
 	color: #b38600;
-}
-
-.activities tbody tr:not(:last-child) {
-	border-bottom: 1px solid #e6eaef !important;
 }
 
 .activities tbody td {

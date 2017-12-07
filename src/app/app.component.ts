@@ -168,7 +168,8 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 				if ( this.selectedActivity !== null && this.selectedActivity.id === id ) {
 					this.selectedActivity = null;
 				}
-			});
+			})
+			.then( () => this.getTotalTime() );
 	}
 
 	duplicate( event, id: number ): void  {
