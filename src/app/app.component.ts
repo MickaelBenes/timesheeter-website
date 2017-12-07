@@ -41,6 +41,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 	];
 	objDiffer: any;
 	selectedActivity: Activity;
+	totalTime: string;
 
 	constructor( private activityService: ActivityService, private differs: KeyValueDiffers ) {
 		this.durationInterval = setInterval( () => this.refreshActivitiesDuration(), 1000 );
@@ -53,7 +54,8 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 				this.activities.forEach(act => {
 					this.objDiffer[ act.id ] = this.differs.find( act ).create( null );
 				});
-			});
+			})
+			.then( () => this.getTotalTime() );
 	}
 
 	ngOnDestroy(): void {
@@ -150,7 +152,8 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 			.then(activity => {
 				const indexOldAct = this.activities.findIndex( act => act.id === activity.id );
 				this.activities[ indexOldAct ] = ActivityUtils.wrapActivity( activity );
-			});
+			})
+			.then( () => this.getTotalTime() );
 	}
 
 	delete( event, id: number ): void {
@@ -222,6 +225,11 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 				this.stop( null, activity.id );
 			}
 		});
+	}
+
+	private getTotalTime(): void {
+		this.activityService.getTotalTime()
+			.then( totalTime => this.totalTime = totalTime );
 	}
 
 }

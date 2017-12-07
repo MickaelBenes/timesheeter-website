@@ -5,22 +5,25 @@
 	width: 100%;
 }
 
-.activities thead {
-	display: table-header-group;
+.activities thead, .activities tfoot {
 	vertical-align: middle;
 	border-color: inherit;
 }
 
-.activities thead tr {
+.activities thead tr, .activities tfoot tr {
 	border-top: 1px solid #e6eaef !important;
 	border-bottom: 1px solid #e6eaef !important;
 }
 
-.activities thead th {
+.activities thead th, .activities tfoot td {
 	text-transform: uppercase;
 	text-align: left;
 	padding: 6px 0 6px 10px;
 	color: #f2f2f2;
+}
+
+.activities tfoot td {
+	font-weight: 700;
 }
 
 .activities tbody {
