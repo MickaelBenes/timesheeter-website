@@ -59,6 +59,8 @@
 	</div>
 </div>
 
+<ts-search></ts-search>
+
 <ts-activity-pagination *ngIf="this.nbActivities > 0" [offset]="this.offset" [limit]="this.limit"
 						[size]="this.nbActivities" (pageChange)="this.onPageChange( $event )"></ts-activity-pagination>
 

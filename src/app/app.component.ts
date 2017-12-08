@@ -23,7 +23,6 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 		])
 	]
 })
-
 export class AppComponent implements OnInit, OnDestroy, DoCheck {
 
 	title								= 'Activities';
