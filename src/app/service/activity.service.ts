@@ -90,12 +90,7 @@ export class ActivityService {
 		return this.http.get( url, this.httpOpts )
 			.toPromise()
 			.then( response => {
-				if ( response === null ) {
-					return '';
-				}
-				else {
-					return response['totalTime'];
-				}
+				return response ? response['totalTime'] : '';
 			})
 			.catch( this.handleError );
 	}
