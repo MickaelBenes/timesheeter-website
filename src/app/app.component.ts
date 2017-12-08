@@ -105,6 +105,12 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 		}
 	}
 
+	onPageChange( offset ) {
+		this.offset = offset;
+
+		this.buildPagedActivities();
+	}
+
 	getActivities(): Promise<void> {
 		return this.activityService.getActivities()
 			.then(activities => {
@@ -183,12 +189,6 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 				this.activities.push( activity );
 				this.objDiffer[ activity.id ] = this.differs.find( activity ).create();
 			});
-	}
-
-	onPageChange( offset ) {
-		this.offset = offset;
-
-		this.buildPagedActivities();
 	}
 
 	private buildPagedActivities(): void {
