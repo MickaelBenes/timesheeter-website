@@ -200,14 +200,8 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 	}
 
 	private toggleForm(): void {
-		if ( this.displayForm === false ) {
-			this.displayForm = true;
-		}
-		else {
-			this.displayForm = false;
-		}
-
-		this.selectedActivity = null;
+		this.displayForm		= !this.displayForm;
+		this.selectedActivity	= null;
 	}
 
 	private refreshActivitiesDuration(): void {
