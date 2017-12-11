@@ -1,8 +1,8 @@
-<h1 class="main-title">{{ this.title }}</h1>
+<h1 class="main-title">{{ title }}</h1>
 
-<button class="btn btn-action mt-4 mb-4" (click)="this.toggleForm()">New activity</button>
+<button class="btn btn-action mt-4 mb-4" (click)="toggleForm()">New activity</button>
 
-<div class="activity-form mb-4" *ngIf="displayForm" [@formActivity]="this.displayForm">
+<div class="activity-form mb-4" *ngIf="displayForm" [@formActivity]="displayForm">
 	<div class="form-group">
 		<input #title required="required">
 		<span class="bar"></span>
@@ -11,7 +11,7 @@
 	<div class="form-group">
 		<select #activityType required="required">
 			<option value="">Select an activity type...</option>
-			<option *ngFor="let actType of this.activityTypes" value="{{ actType.id }}">
+			<option *ngFor="let actType of activityTypes" value="{{ actType.id }}">
 				{{ actType.name }}
 			</option>
 		</select>
@@ -24,24 +24,24 @@
 		<label>Activity ticket</label>
 	</div>
 	<div class="form-group">
-		<button class="btn" (click)="this.toggleForm();">Cancel</button>
-		<button class="btn btn-action" (click)="this.create( title.value, activityType.value, activityTicket.value )">Create</button>
+		<button class="btn" (click)="toggleForm();">Cancel</button>
+		<button class="btn btn-action" (click)="create( title.value, activityType.value, activityTicket.value )">Create</button>
 	</div>
 </div>
 
-<div class="activity-form mb-4" *ngIf="this.selectedActivity" [@formActivity]="this.selectedActivity">
+<div class="activity-form mb-4" *ngIf="selectedActivity" [@formActivity]="selectedActivity">
 	<div class="form-group">
-		<input #title required="required" value="{{ this.selectedActivity.title }}">
+		<input #title required="required" value="{{ selectedActivity.title }}">
 		<span class="bar"></span>
 		<label>Title</label>
 	</div>
 	<div class="form-group">
 		<select #activityType required="required">
-			<option value="" [attr.selected]="this.selectedActivity.activityType === '' ? true : null">
+			<option value="" [attr.selected]="selectedActivity.activityType === '' ? true : null">
 				Select an activity type...
 			</option>
-			<option *ngFor="let actType of this.activityTypes" value="{{ actType.id }}"
-					[attr.selected]="this.selectedActivity.activityType === actType.name ? true : null">
+			<option *ngFor="let actType of activityTypes" value="{{ actType.id }}"
+					[attr.selected]="selectedActivity.activityType === actType.name ? true : null">
 				{{ actType.name }}
 			</option>
 		</select>
@@ -49,20 +49,20 @@
 		<span class="bar"></span>
 	</div>
 	<div class="form-group">
-		<input #activityTicket required="required" value="{{ this.selectedActivity.activityTicket }}">
+		<input #activityTicket required="required" value="{{ selectedActivity.activityTicket }}">
 		<span class="bar"></span>
 		<label>Activity ticket</label>
 	</div>
 	<div class="form-group">
-		<button class="btn" (click)="this.onSelect( null )">Cancel</button>
-		<button class="btn btn-action" (click)="this.update( title.value, activityType.value, activityTicket.value )">Update</button>
+		<button class="btn" (click)="onSelect( null )">Cancel</button>
+		<button class="btn btn-action" (click)="update( title.value, activityType.value, activityTicket.value )">Update</button>
 	</div>
 </div>
 
 <ts-search></ts-search>
 
-<ts-activity-pagination *ngIf="this.nbActivities > 0" [offset]="this.offset" [limit]="this.limit"
-						[size]="this.nbActivities" (pageChange)="this.onPageChange( $event )"></ts-activity-pagination>
+<ts-activity-pagination *ngIf="nbActivities > 0" [offset]="offset" [limit]="limit"
+						[size]="nbActivities" (pageChange)="onPageChange( $event )"></ts-activity-pagination>
 
 <table class="activities">
 	<thead>
@@ -77,13 +77,13 @@
 	</thead>
 	<tbody>
 		<tr *ngFor="let activity of pagedActivities"
-			[class.selected]="activity === this.selectedActivity"
-			(click)="this.onSelect( activity )"
+			[class.selected]="activity === selectedActivity"
+			(click)="onSelect( activity )"
 		>
 			<td>{{ activity.id }}</td>
 			<td>{{ activity.title }}</td>
 			<td>
-				<a *ngIf="activity.activityType && activity.activityTicket" href="{{ this.redmine }}{{ activity.activityTicket }}">
+				<a *ngIf="activity.activityType && activity.activityTicket" href="{{ redmine }}{{ activity.activityTicket }}">
 					{{ activity.activityType }} #{{ activity.activityTicket }}
 				</a>
 			</td>
@@ -94,15 +94,15 @@
 			<td>
 				<button class="btn btn-mini btn-mini-action"
 					  *ngIf="activity.stopTime === null"
-					  (click)="this.stop( $event, activity.id )">
+					  (click)="stop( $event, activity.id )">
 					<span class="short">S</span>
 					<span class="long">stop</span>
 				</button>
-				<button class="btn btn-mini btn-mini-action" (click)="this.duplicate( $event, activity.id )">
+				<button class="btn btn-mini btn-mini-action" (click)="duplicate( $event, activity.id )">
 					<span class="short">D</span>
 					<span class="long">duplicate</span>
 				</button>
-				<button class="btn btn-mini btn-mini-delete" (click)="this.delete( $event, activity.id )">
+				<button class="btn btn-mini btn-mini-delete" (click)="delete( $event, activity.id )">
 					<span class="short">X</span>
 					<span class="long">delete</span>
 				</button>
@@ -111,10 +111,10 @@
 	</tbody>
 	<tfoot>
 		<tr>
-			<td colspan="6">Total ativities: {{ this.nbActivities }}</td>
+			<td colspan="6">Total ativities: {{ nbActivities }}</td>
 		</tr>
 		<tr>
-			<td colspan="6">Total time: {{ this.totalTime }}</td>
+			<td colspan="6">Total time: {{ totalTime }}</td>
 		</tr>
 	</tfoot>
 </table>

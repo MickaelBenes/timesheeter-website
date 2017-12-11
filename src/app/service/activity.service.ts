@@ -102,7 +102,7 @@ export class ActivityService {
 
 		console.log('searching: ' + searchTerms);
 
-		return this.http.get<Activity[]>(this.endpoint + searchTerms).pipe(
+		return this.http.get<Activity[]>(`${this.endpoint}/${searchTerms}`).pipe(
 			tap(_ => console.log(`found activities matching "${searchTerms}"`)),
 			catchError(this.handleError)
 		);

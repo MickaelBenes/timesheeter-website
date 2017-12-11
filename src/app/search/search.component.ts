@@ -19,11 +19,16 @@ export class SearchComponent implements OnInit {
 	constructor(private service: ActivityService) {}
 
 	ngOnInit(): void {
+		console.log('------------------------ INIT ------------------------');
 		this.activities$ = this.searchTerms.pipe(
 			debounceTime(300),
 			distinctUntilChanged(),
-			switchMap((term: string) => this.service.searchActivities(term))
+			switchMap((term: string) => {
+				console.log(`searchActivities(${term})`);
+				return this.service.searchActivities(term);
+			})
 		);
+		console.log('---------------------- END INIT ----------------------');
 	}
 
 	search(terms: string): void {
