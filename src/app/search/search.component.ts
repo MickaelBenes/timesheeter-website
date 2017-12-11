@@ -27,12 +27,11 @@ export class SearchComponent implements OnInit {
 	}
 
 	search(terms: string): void {
-		// if ( searchTerms.length > 2 ) {
+		if (terms.length > 2) {
 			console.log('searching: ' + terms);
-			console.log(this.activities$);
 
 			this.searchTerms.next(terms);
-		// }
+		}
 	}
 
 }
