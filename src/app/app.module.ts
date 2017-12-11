@@ -6,12 +6,11 @@ import {AppComponent} from './app.component';
 import {PaginationComponent} from './pagination/pagination.component';
 import {SearchComponent} from './search/search.component';
 import {ActivityService} from './service/activity.service';
-import {ActivitySearchService} from './service/activity-search.service';
 
 @NgModule({
 	declarations: [AppComponent, PaginationComponent, SearchComponent],
 	imports: [BrowserModule, HttpClientModule, BrowserAnimationsModule],
-	providers: [ActivityService, ActivitySearchService],
+	providers: [ActivityService],
 	bootstrap: [AppComponent ]
 })
 

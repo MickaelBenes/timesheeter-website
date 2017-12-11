@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {ActivitySearchService} from '../service/activity-search.service';
+import {ActivityService} from '../service/activity.service';
 import {Activity} from '../domain/Activity';
 
 @Component({
@@ -16,22 +16,22 @@ export class SearchComponent implements OnInit {
 
 	activities$: Observable<Activity[]>;
 
-	constructor(private service: ActivitySearchService) {}
+	constructor(private service: ActivityService) {}
 
 	ngOnInit(): void {
 		this.activities$ = this.searchTerms.pipe(
 			debounceTime(300),
 			distinctUntilChanged(),
-			switchMap((term: string) => this.service.search(term))
+			switchMap((term: string) => this.service.searchActivities(term))
 		);
 	}
 
-	search(searchTerms: string): void {
+	search(terms: string): void {
 		// if ( searchTerms.length > 2 ) {
-			console.log('searching: ' + searchTerms);
+			console.log('searching: ' + terms);
 			console.log(this.activities$);
 
-			this.searchTerms.next(searchTerms);
+			this.searchTerms.next(terms);
 		// }
 	}
 

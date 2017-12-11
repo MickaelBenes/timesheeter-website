@@ -1,12 +1,15 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Activity} from '../domain/Activity';
+import {Observable} from 'rxjs/Observable';
+import {catchError, tap} from 'rxjs/operators';
+import {of} from 'rxjs/observable/of';
 
 @Injectable()
 export class ActivityService {
 
-	protected endpoint	= 'http://localhost:50000/activities';
-	protected httpOpts	= {
+	private endpoint	= 'http://localhost:50000/activities';
+	private httpOpts	= {
 		headers: new HttpHeaders({
 			'Authorization': 'Basic dXNlcjpwYXNz',
 			'Content-Type': 'application/json'
@@ -14,9 +17,9 @@ export class ActivityService {
 		withCredentials: true
 	};
 
-	constructor(protected http: HttpClient) {}
+	constructor(private http: HttpClient) {}
 
-	protected handleError(error: any): Promise<any> {
+	private handleError(error: any): Promise<any> {
 		console.error('An error occured : ', error);
 
 		return Promise.reject(error.message || error);
@@ -90,6 +93,19 @@ export class ActivityService {
 				return response ? response['totalTime'] : '';
 			})
 			.catch(this.handleError);
+	}
+
+	searchActivities(searchTerms: string): Observable<Activity[]> {
+		if (!searchTerms.trim()) {
+			return of([]);
+		}
+
+		console.log('searching: ' + searchTerms);
+
+		return this.http.get<Activity[]>(this.endpoint + searchTerms).pipe(
+			tap(_ => console.log(`found activities matching "${searchTerms}"`)),
+			catchError(this.handleError)
+		);
 	}
 
 }
