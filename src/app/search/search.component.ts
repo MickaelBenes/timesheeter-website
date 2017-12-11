@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {ActivityService} from '../service/activity.service';
 import {Activity} from '../domain/Activity';
+import {ActivityUtils} from '../utils/ActivityUtils';
 
 @Component({
 	selector: 'ts-search',
@@ -14,29 +14,37 @@ export class SearchComponent implements OnInit {
 
 	private searchTerms = new Subject<string>();
 
-	activities$: Observable<Activity[]>;
+	@Output() activityChange: EventEmitter<Activity[]> = new EventEmitter<Activity[]>();
 
 	constructor(private service: ActivityService) {}
 
 	ngOnInit(): void {
-		console.log('------------------------ INIT ------------------------');
-		this.activities$ = this.searchTerms.pipe(
-			debounceTime(300),
-			distinctUntilChanged(),
-			switchMap((term: string) => {
-				console.log(`searchActivities(${term})`);
-				return this.service.searchActivities(term);
-			})
-		);
-		console.log('---------------------- END INIT ----------------------');
+		this.searchTerms
+			.pipe(
+				debounceTime(300),
+				distinctUntilChanged(),
+				switchMap((term: string) => this.service.searchActivities(term))
+			)
+			.subscribe(items => {
+				const activities: Activity[] = [];
+
+				if (items.length > 0) {
+					items.forEach(item => {
+						const activity = ActivityUtils.wrapActivity(item);
+						activities.push(activity);
+					});
+				}
+
+				this.activityChange.emit(activities);
+			});
 	}
 
 	search(terms: string): void {
-		if (terms.length > 2) {
-			console.log('searching: ' + terms);
+		this.searchTerms.next(terms);
+	}
 
-			this.searchTerms.next(terms);
-		}
+	clearSearch(): void {
+
 	}
 
 }

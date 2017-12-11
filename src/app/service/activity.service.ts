@@ -100,10 +100,9 @@ export class ActivityService {
 			return of([]);
 		}
 
-		console.log('searching: ' + searchTerms);
-
-		return this.http.get<Activity[]>(`${this.endpoint}/${searchTerms}`).pipe(
-			tap(_ => console.log(`found activities matching "${searchTerms}"`)),
+		const url = `${this.endpoint}/search/${searchTerms}`;
+		return this.http.get<Activity[]>(url, this.httpOpts).pipe(
+			tap(_ => console.log(`found activities matching "${searchTerms}"`, _)),
 			catchError(this.handleError)
 		);
 	}

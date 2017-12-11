@@ -33,9 +33,9 @@ export class PaginationComponent implements OnInit, OnChanges {
 	getPages( offset: number, limit: number, size: number ): void {
 		this.currentPage	= this.getCurrentPage( offset, limit );
 		this.totalPages		= this.getTotalPages( limit, size );
-		this.pages			= Observable.range( -this.range, this.range * 2 + 1 )
-			.map( offset => this.currentPage + offset )
-			.filter( page => this.isValidPageNumber(page, this.totalPages) )
+		this.pages			= Observable.range(-this.range, this.range * 2 + 1)
+			.map(offset => this.currentPage + offset)
+			.filter(page => this.isValidPageNumber(page, this.totalPages))
 			.toArray();
 	}
 
