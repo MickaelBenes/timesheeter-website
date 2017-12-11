@@ -51,7 +51,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 		this.getActivities()
 			.then(() => {
 				this.activities.forEach(act => {
-					this.objDiffer[ act.id ] = this.differs.find( act ).create( null );
+					this.objDiffer[ act.id ] = this.differs.find( act ).create();
 				});
 			})
 			.then( () => this.getTotalTime() );
