@@ -172,7 +172,7 @@ a:hover {
 }
 
 .form-group input:focus ~ label, .form-group input:valid ~ label,
-.form-group select:focus ~ label, .form-group select:valid ~ label{
+.form-group select:focus ~ label, .form-group select:valid ~ label {
 	top: -14px;
 	font-size: 12px;
 	color: #f2f2f2;
@@ -209,4 +209,10 @@ a:hover {
 	 background: #2196F3;
 	 transition: 300ms ease all;
 	 left: 0%;
+}
+
+.search-box {
+	margin: 0 0 15px 0;
+	width: 25%;
+	left: 75%;
 }
