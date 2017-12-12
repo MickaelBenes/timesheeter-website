@@ -221,3 +221,24 @@ a:hover {
 	padding: 0;
 	border: none;
 }
+
+/*.grid .grid-2 {*/
+	/*width: 50%;*/
+/*}*/
+
+/*.grid .grid-2:nth-child(odd) {*/
+	/*float: left;*/
+/*}*/
+
+/*.grid .grid-2:nth-child(even) {*/
+	/*float: right;*/
+/*}*/
+
+.grid.grid-2 > div {
+	width: 50%;
+	float: left;
+}
+
+.grid.grid-2 > div {
+	float: left;
+}
