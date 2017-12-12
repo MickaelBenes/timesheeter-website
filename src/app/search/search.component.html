@@ -1,5 +1,5 @@
 <div class="form-group search-box">
-	<input #searchBox required="required" (keyup)="search(searchBox.value)">
+	<input #searchBox id="searchBox" required (keyup)="search(searchBox.value)">
 	<span class="bar"></span>
-	<label>Search</label>
+	<label for="searchBox">Search</label>
 </div>
