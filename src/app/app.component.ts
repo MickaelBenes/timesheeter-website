@@ -15,7 +15,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 	animations: [
 		trigger('formActivity', [
 			state( 'void', style({'width': 0, 'max-height': 0}) ),
-			state( '*', style({'width': '50%', 'max-height': 250}) ),
+			state( '*', style({'width': '100%', 'max-height': 250}) ),
 			transition(
 				'void <=> *',
 				animate( '500ms ease-in' )

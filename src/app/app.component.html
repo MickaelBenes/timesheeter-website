@@ -1,68 +1,72 @@
 <h1 class="main-title">{{ title }}</h1>
 
-<button class="btn btn-action mt-4 mb-4" (click)="toggleForm()">New activity</button>
+<div class="grid w-50 float-left">
+	<button class="btn btn-action mt-4 mb-4" (click)="toggleForm()">New activity</button>
 
-<div class="activity-form mb-4" *ngIf="displayForm" [@formActivity]="displayForm">
-	<div class="form-group">
-		<input #title id="formCreateTitle" required>
-		<span class="bar"></span>
-		<label for="formCreateTitle">Title</label>
+	<div class="activity-form mb-4" *ngIf="displayForm" [@formActivity]="displayForm">
+		<div class="form-group">
+			<input #title id="formCreateTitle" required>
+			<span class="bar"></span>
+			<label for="formCreateTitle">Title</label>
+		</div>
+		<div class="form-group">
+			<select #activityType id="formCreateActivityType" required>
+				<option value="">Select an activity type...</option>
+				<option *ngFor="let actType of activityTypes" value="{{ actType.id }}">
+					{{ actType.name }}
+				</option>
+			</select>
+			<span class="highlight"></span>
+			<span class="bar"></span>
+		</div>
+		<div class="form-group">
+			<input #activityTicket id="formCreateActivityTicket" required>
+			<span class="bar"></span>
+			<label for="formCreateActivityTicket">Activity ticket</label>
+		</div>
+		<div class="form-group">
+			<button class="btn" (click)="toggleForm();">Cancel</button>
+			<button class="btn btn-action" (click)="create( title.value, activityType.value, activityTicket.value )">Create</button>
+		</div>
 	</div>
-	<div class="form-group">
-		<select #activityType id="formCreateActivityType" required>
-			<option value="">Select an activity type...</option>
-			<option *ngFor="let actType of activityTypes" value="{{ actType.id }}">
-				{{ actType.name }}
-			</option>
-		</select>
-		<span class="highlight"></span>
-		<span class="bar"></span>
-	</div>
-	<div class="form-group">
-		<input #activityTicket id="formCreateActivityTicket" required>
-		<span class="bar"></span>
-		<label for="formCreateActivityTicket">Activity ticket</label>
-	</div>
-	<div class="form-group">
-		<button class="btn" (click)="toggleForm();">Cancel</button>
-		<button class="btn btn-action" (click)="create( title.value, activityType.value, activityTicket.value )">Create</button>
+
+	<div class="activity-form mb-4" *ngIf="selectedActivity" [@formActivity]="selectedActivity">
+		<div class="form-group">
+			<input #title id="formUpdateTitle" required value="{{ selectedActivity.title }}">
+			<span class="bar"></span>
+			<label for="formUpdateTitle">Title</label>
+		</div>
+		<div class="form-group">
+			<select #activityType required>
+				<option value="" [attr.selected]="selectedActivity.activityType === '' ? true : null">
+					Select an activity type...
+				</option>
+				<option *ngFor="let actType of activityTypes" value="{{ actType.id }}"
+						[attr.selected]="selectedActivity.activityType === actType.name ? true : null">
+					{{ actType.name }}
+				</option>
+			</select>
+			<span class="highlight"></span>
+			<span class="bar"></span>
+		</div>
+		<div class="form-group">
+			<input #activityTicket id="formUpdateActivityTicket" required value="{{ selectedActivity.activityTicket }}">
+			<span class="bar"></span>
+			<label for="formUpdateActivityTicket">Activity ticket</label>
+		</div>
+		<div class="form-group">
+			<button class="btn" (click)="onSelect( null )">Cancel</button>
+			<button class="btn btn-action" (click)="update( title.value, activityType.value, activityTicket.value )">Update</button>
+		</div>
 	</div>
 </div>
 
-<div class="activity-form mb-4" *ngIf="selectedActivity" [@formActivity]="selectedActivity">
-	<div class="form-group">
-		<input #title id="formUpdateTitle" required value="{{ selectedActivity.title }}">
-		<span class="bar"></span>
-		<label for="formUpdateTitle">Title</label>
-	</div>
-	<div class="form-group">
-		<select #activityType required>
-			<option value="" [attr.selected]="selectedActivity.activityType === '' ? true : null">
-				Select an activity type...
-			</option>
-			<option *ngFor="let actType of activityTypes" value="{{ actType.id }}"
-					[attr.selected]="selectedActivity.activityType === actType.name ? true : null">
-				{{ actType.name }}
-			</option>
-		</select>
-		<span class="highlight"></span>
-		<span class="bar"></span>
-	</div>
-	<div class="form-group">
-		<input #activityTicket id="formUpdateActivityTicket" required value="{{ selectedActivity.activityTicket }}">
-		<span class="bar"></span>
-		<label for="formUpdateActivityTicket">Activity ticket</label>
-	</div>
-	<div class="form-group">
-		<button class="btn" (click)="onSelect( null )">Cancel</button>
-		<button class="btn btn-action" (click)="update( title.value, activityType.value, activityTicket.value )">Update</button>
-	</div>
+<div class="grid w-50 float-right">
+	<ts-search (activityChange)="onSearch($event)"></ts-search>
+
+	<ts-activity-pagination *ngIf="nbActivities > 0" [offset]="offset" [limit]="limit"
+							[size]="nbActivities" (pageChange)="onPageChange( $event )"></ts-activity-pagination>
 </div>
-
-<ts-search (activityChange)="onSearch($event)"></ts-search>
-
-<ts-activity-pagination *ngIf="nbActivities > 0" [offset]="offset" [limit]="limit"
-						[size]="nbActivities" (pageChange)="onPageChange( $event )"></ts-activity-pagination>
 
 <table class="activities">
 	<thead>
