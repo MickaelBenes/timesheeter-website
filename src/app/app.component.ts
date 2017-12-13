@@ -121,12 +121,6 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 				const activitiesTemp = [];
 
 				activities.forEach(act => {
-					if (act instanceof Activity) {
-						// when the activities come from the search they were already wrapped as new Activity
-						// so we skip the loop to avoid doing it again
-						return;
-					}
-
 					const activity = ActivityUtils.wrapActivity(act);
 					activitiesTemp.push(activity);
 				});
