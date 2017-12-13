@@ -1,3 +1,5 @@
+@import "/assets/font-awesome/css/fontawesome-all.min.css";
+
 ::selection {
 	background-color: darkgoldenrod;
 	color: #FFFFFF;
@@ -208,11 +210,11 @@ label {
 	 content: '';
 	 height: 2px;
 	 width: 0;
-	 bottom: 0px;
+	 bottom: 0;
 	 position: absolute;
 	 background: #2196F3;
 	 transition: 300ms ease all;
-	 left: 0%;
+	 left: 0;
 }
 
 .search-box {
@@ -220,6 +222,16 @@ label {
 	margin: 0 0 20px 0;
 	width: 50%;
 	left: 50%;
+}
+
+.fa-search {
+	position: absolute;
+	top: 15px;
+	left: 5px;
+}
+
+.search-box input {
+	text-indent: 25px;
 }
 
 .grid {
