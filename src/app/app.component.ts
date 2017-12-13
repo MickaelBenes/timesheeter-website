@@ -107,10 +107,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 	onSearch(activities: Activity[]): void {
 		if (activities.length === 0) {
 			// this works but recreating the activity array makes an ugly animation
-			// and if the search does not match we still have the full activities list
 			// TODO need to check if the search returns an empty array or if the user clears the search
-			this.activities	=  [];
-			this.objDiffer	=  [];
 
 			this.getActivities();
 		}
@@ -122,10 +119,14 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 	getActivities(): void {
 		this.activityService.getActivities()
 			.then(activities => {
+				const activitiesTemp = [];
+
 				activities.forEach(act => {
 					const activity = ActivityUtils.wrapActivity( act );
-					this.activities.push( activity );
+					activitiesTemp.push( activity );
 				});
+
+				this.activities = activitiesTemp;
 			})
 			.then(() => {
 				this.activities.forEach(act => {
