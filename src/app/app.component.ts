@@ -108,7 +108,6 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 		if (activities.length === 0) {
 			// this works but recreating the activity array makes an ugly animation
 			// TODO need to check if the search returns an empty array or if the user clears the search
-
 			this.getActivities();
 		}
 		else {
@@ -122,8 +121,14 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 				const activitiesTemp = [];
 
 				activities.forEach(act => {
-					const activity = ActivityUtils.wrapActivity( act );
-					activitiesTemp.push( activity );
+					if (act instanceof Activity) {
+						// when the activities come from the search they were already wrapped as new Activity
+						// so we skip the loop to avoid doing it again
+						return;
+					}
+
+					const activity = ActivityUtils.wrapActivity(act);
+					activitiesTemp.push(activity);
 				});
 
 				this.activities = activitiesTemp;
