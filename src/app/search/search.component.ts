@@ -45,6 +45,7 @@ export class SearchComponent implements OnInit {
 
 	clearSearch(searchInput: HTMLInputElement): void {
 		searchInput.value = '';
+		searchInput.focus();
 		this.searchTerms.next('clearSearch');
 	}
 
