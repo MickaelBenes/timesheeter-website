@@ -224,14 +224,21 @@ label {
 	left: 50%;
 }
 
-.fa-search {
+.search-box input {
+	text-indent: 25px;
+}
+
+.search-box .fa-search {
 	position: absolute;
 	top: 16px;
 	left: 5px;
 }
 
-.search-box input {
-	text-indent: 25px;
+.search-box .fa-times {
+	position: absolute;
+	top: 16px;
+	right: 5px;
+	cursor: pointer;
 }
 
 .grid {
@@ -242,9 +249,5 @@ label {
 
 .grid.grid-2 > div {
 	width: 50%;
-	float: left;
-}
-
-.grid.grid-2 > div {
 	float: left;
 }
