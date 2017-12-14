@@ -31,13 +31,10 @@ export class ActivityService {
 			.catch(this.handleError);
 	}
 
-	getActivity(id: number): Promise<Activity> {
+	getActivity(id: number): Observable<Activity> {
 		const url = `${ this.endpoint }/${ id }`;
 
-		return this.http.get(url, this.httpOpts)
-			.toPromise()
-			.then(response => response as Activity)
-			.catch(this.handleError);
+		return this.http.get<Activity>(url, this.httpOpts);
 	}
 
 	create(activity: Activity): Promise<Activity> {

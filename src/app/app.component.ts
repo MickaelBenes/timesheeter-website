@@ -128,6 +128,13 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 			.then(() => this.getTotalTime());
 	}
 
+	getActivity(): void {
+		this.activityService.getActivity(1)
+			.subscribe(activity => {
+				console.log(activity);
+			});
+	}
+
 	create( title, activityType, activityTicket ): void {
 		this.stopActiveActivities();
 
