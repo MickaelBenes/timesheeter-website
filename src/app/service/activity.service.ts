@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Activity} from '../domain/Activity';
 import {Observable} from 'rxjs/Observable';
-import {catchError, tap} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class ActivityService {
@@ -34,7 +34,10 @@ export class ActivityService {
 	getActivity(id: number): Observable<Activity> {
 		const url = `${ this.endpoint }/${ id }`;
 
-		return this.http.get<Activity>(url, this.httpOpts);
+		return this.http.get<Activity>(url, this.httpOpts)
+			.pipe(
+				catchError(this.handleError)
+			);
 	}
 
 	create(activity: Activity): Promise<Activity> {
@@ -89,6 +92,24 @@ export class ActivityService {
 				return response ? response['totalTime'] : '';
 			})
 			.catch(this.handleError);
+	}
+
+	getWorkingTime(activities?: Activity[]): Observable<string> {
+		const url	= `${ this.endpoint }/workingTime`;
+
+		let obs: Observable<string>;
+		if (activities) {
+			const ids	= activities.map(act => act.id);
+			obs			= this.http.post<string>(url, ids, this.httpOpts);
+		}
+		else {
+			obs = this.http.get<string>(url, this.httpOpts);
+		}
+
+		return obs.pipe(
+			map(response => response ? response['totalTime'] : ''),
+			catchError(this.handleError)
+		);
 	}
 
 	searchActivities(searchTerms: string): Observable<Activity[]> {

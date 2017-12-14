@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy, DoCheck, KeyValueDiffers } from '@angular/core';
+import {Component, DoCheck, KeyValueDiffers, OnDestroy, OnInit} from '@angular/core';
 
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 
-import { Activity } from './domain/Activity';
-import { ActivityService } from './service/activity.service';
-import { ActivityUtils } from './utils/ActivityUtils';
-import { ActivityType } from './domain/ActivityType';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {Activity} from './domain/Activity';
+import {ActivityService} from './service/activity.service';
+import {ActivityUtils} from './utils/ActivityUtils';
+import {ActivityType} from './domain/ActivityType';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
 	selector: 'ts-app-root',
@@ -106,6 +106,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 
 	onSearch(activities: Activity[]): void {
 		this.activities = activities;
+		this.getWorkingTime(this.activities);
 	}
 
 	getActivities(): void {
@@ -125,7 +126,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 					this.objDiffer[act.id] = this.differs.find(act).create();
 				});
 			})
-			.then(() => this.getTotalTime());
+			.then(() => this.getWorkingTime());
 	}
 
 	getActivity(): void {
@@ -173,7 +174,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 				const indexOldAct = this.activities.findIndex( act => act.id === activity.id );
 				this.activities[ indexOldAct ] = ActivityUtils.wrapActivity( activity );
 			})
-			.then( () => this.getTotalTime() );
+			.then( () => this.getWorkingTime() );
 	}
 
 	delete( event, id: number ): void {
@@ -189,7 +190,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 					this.selectedActivity = null;
 				}
 			})
-			.then( () => this.getTotalTime() );
+			.then( () => this.getWorkingTime() );
 	}
 
 	duplicate( event, id: number ): void  {
@@ -202,6 +203,13 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 
 				this.activities.push( activity );
 				this.objDiffer[ activity.id ] = this.differs.find( activity ).create();
+			});
+	}
+
+	getWorkingTime(activities?: Activity[]) {
+		this.activityService.getWorkingTime(activities)
+			.subscribe(totalTime => {
+				this.totalTime = totalTime;
 			});
 	}
 
