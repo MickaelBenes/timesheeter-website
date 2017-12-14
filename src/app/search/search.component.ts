@@ -44,7 +44,7 @@ export class SearchComponent implements OnInit {
 	}
 
 	clearSearch(): void {
-
+		this.searchTerms.next('clearSearch');
 	}
 
 }

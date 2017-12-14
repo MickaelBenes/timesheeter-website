@@ -96,8 +96,8 @@ export class ActivityService {
 	}
 
 	searchActivities(searchTerms: string): Observable<Activity[]> {
-		if (!searchTerms.trim()) {
-			return of([]);
+		if (!searchTerms.trim() || searchTerms == 'clearSearch') {
+			return this.http.get<Activity[]>(this.endpoint, this.httpOpts);
 		}
 
 		const url = `${this.endpoint}/search/${searchTerms}`;
