@@ -106,7 +106,9 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 
 	onSearch(activities: Activity[]): void {
 		this.activities = activities;
+
 		this.getWorkingTime(this.activities);
+		this.onPageChange(0);
 	}
 
 	getActivities(): void {
