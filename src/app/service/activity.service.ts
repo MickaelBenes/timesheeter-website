@@ -83,17 +83,6 @@ export class ActivityService {
 			.catch(this.handleError);
 	}
 
-	getTotalTime(): Promise<string> {
-		const url = `${ this.endpoint }/totalTime`;
-
-		return this.http.get(url, this.httpOpts)
-			.toPromise()
-			.then(response => {
-				return response ? response['totalTime'] : '';
-			})
-			.catch(this.handleError);
-	}
-
 	getWorkingTime(activities?: Activity[]): Observable<string> {
 		const url	= `${ this.endpoint }/workingTime`;
 

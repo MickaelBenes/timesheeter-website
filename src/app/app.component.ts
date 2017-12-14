@@ -244,9 +244,4 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 		});
 	}
 
-	private getTotalTime(): void {
-		this.activityService.getTotalTime()
-			.then( totalTime => this.totalTime = totalTime );
-	}
-
 }
