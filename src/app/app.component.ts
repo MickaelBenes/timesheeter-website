@@ -56,7 +56,7 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 	}
 
 	ngDoCheck(): void {
-		if ( this.activities.length !== this.nbActivities ) {
+		if (this.activities.length !== this.nbActivities) {
 			const hasMoreActivities = this.activities.length > this.nbActivities;
 			this.selectedActivity	= null;
 			this.nbActivities		= this.activities.length;
