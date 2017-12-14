@@ -10,11 +10,15 @@
 	color: #FFFFFF;
 }
 
+html {
+	overflow-y: scroll;
+}
+
 body {
 	padding: 25px 50px;
 	background-color: #2B2B2B;
 	color: #f2f2f2;
-	font-size: 15px;
+	font-size: 14px;
 }
 
 a {
@@ -138,10 +142,6 @@ a:hover {
 
 .form-group:not(:first-child:last-child) {
 	margin: 45px 0;
-}
-
-input {
-	font-size: 18px;
 }
 
 ::placeholder {

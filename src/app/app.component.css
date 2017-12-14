@@ -56,11 +56,6 @@
 }
 
 .activities tbody td {
-	line-height: 22px;
 	text-align: left;
 	padding: 6px 0 6px 10px;
-}
-
-.activities thead td, .activities tbody td {
-	line-height: 30px;
 }
