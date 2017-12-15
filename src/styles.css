@@ -218,10 +218,11 @@ label {
 }
 
 .search-box {
+	display: inline-block;
 	position: relative;
 	margin: 0 0 20px 0;
-	width: 50%;
-	left: 50%;
+	width: 35%;
+	left: 65%;
 }
 
 .search-box input {
@@ -230,13 +231,13 @@ label {
 
 .search-box .fa-search {
 	position: absolute;
-	top: 16px;
+	top: 15px;
 	left: 5px;
 }
 
-.search-box .fa-times {
+.search-box .fa-times-circle {
 	position: absolute;
-	top: 16px;
+	top: 15px;
 	right: 5px;
 	cursor: pointer;
 }
