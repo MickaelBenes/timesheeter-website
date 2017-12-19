@@ -99,17 +99,15 @@
 			<td>
 				<button class="btn btn-mini btn-mini-action"
 					  *ngIf="activity.stopTime === null"
-					  (click)="stop( $event, activity.id )">
-					<span class="short">S</span>
-					<span class="long">stop</span>
+					  (click)="stop( $event, activity.id )"
+					  title="Stop this activity.">
+					<span class="fa fa-stop"></span>
 				</button>
-				<button class="btn btn-mini btn-mini-action" (click)="duplicate( $event, activity.id )">
-					<span class="short">D</span>
-					<span class="long">duplicate</span>
+				<button class="btn btn-mini btn-mini-action" (click)="duplicate( $event, activity.id )" title="Duplicate this activity.">
+					<span class="fa fa-copy"></span>
 				</button>
-				<button class="btn btn-mini btn-mini-delete" (click)="delete( $event, activity.id )">
-					<span class="short">X</span>
-					<span class="long">delete</span>
+				<button class="btn btn-mini btn-mini-delete" (click)="delete( $event, activity.id )" title="Delete this activity.">
+					<span class="fa fa-trash"></span>
 				</button>
 			</td>
 		</tr>
