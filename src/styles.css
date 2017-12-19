@@ -78,6 +78,16 @@ a:hover {
 	color: #2196F3;
 }
 
+.btn.btn-delete {
+	background-color: #cc0000;
+	color: #FFFFFF;
+}
+
+.btn.btn-delete:hover {
+	background-color: #FFFFFF;
+	color: #cc0000;
+}
+
 .btn.btn-mini {
 	padding: 5px;
 	height: 24px;
@@ -116,11 +126,6 @@ a:hover {
 	transition: all .5s .5s;
 	visibility: visible;
 	opacity: 1;
-}
-
-.btn.btn-mini.btn-mini-delete {
-	background-color: #cc0000;
-	color: #FFFFFF;
 }
 
 .btn.btn-mini.btn-mini-action {
