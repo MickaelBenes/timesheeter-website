@@ -1,4 +1,6 @@
 @import "/assets/font-awesome/css/fontawesome-all.min.css";
+/*@import "../node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css";*/
+@import "../node_modules/@angular/material/prebuilt-themes/purple-green.css";
 
 ::selection {
 	background-color: darkgoldenrod;
@@ -250,10 +252,44 @@ label {
 .grid {
 	margin: 0;
 	padding: 0;
+	width: 100%;
+	float: left;
 	border: none;
 }
 
 .grid.grid-2 > div {
 	width: 50%;
 	float: left;
+}
+
+.datepicker-wrapper {
+	width: 100%;
+	height: 60px;
+}
+
+.datepicker-wrapper input {
+	width: 115px;
+}
+
+.datepicker-wrapper .bar {
+	width: 115px;
+}
+
+.datepicker-wrapper mat-datepicker-toggle {
+	position: relative;
+	top: -41px;
+	left: 81px;
+}
+
+.datepicker-wrapper mat-datepicker-toggle mat-icon {
+	width: 18px;
+	height: 18px;
+}
+
+.mat-calendar-body-selected {
+	background-color: #2196F3 !important;
+}
+
+.clear {
+	clear: both;
 }

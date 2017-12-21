@@ -69,15 +69,24 @@
 	</div>
 </div>
 
+<div class="clear"></div>
+<div class="datepicker-wrapper">
+	<input matInput [matDatepicker]="picker" placeholder="Date" disabled [value]="date.value"
+		   (dateInput)="onDateChange($event)" (dateChange)="onDateChange($event)">
+	<span class="bar"></span>
+	<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+	<mat-datepicker #picker disabled="false"></mat-datepicker>
+</div>
+
 <table class="activities">
 	<thead>
 		<tr>
-			<th>ID</th>
+			<th width="25">ID</th>
 			<th>Title</th>
-			<th>Ticket</th>
-			<th>Date</th>
-			<th>Time spent</th>
-			<th width="200">Actions</th>
+			<th width="125">Ticket</th>
+			<th width="95">Date</th>
+			<th width="100">Time spent</th>
+			<th width="90">Actions</th>
 		</tr>
 	</thead>
 	<tbody>

@@ -1,4 +1,7 @@
 import {Component, DoCheck, KeyValueDiffers, OnDestroy, OnInit} from '@angular/core';
+import {FormControl} from '@angular/forms';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 import {Observable} from 'rxjs';
 
@@ -7,6 +10,22 @@ import {ActivityService} from './service/activity.service';
 import {ActivityUtils} from './utils/ActivityUtils';
 import {ActivityType} from './domain/ActivityType';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+
+import * as moment from 'moment';
+import {Moment} from 'moment';
+import {MatDatepickerInputEvent} from '@angular/material';
+
+export const MY_FORMATS = {
+	parse: {
+		dateInput: 'LL',
+	},
+	display: {
+		dateInput: 'L',
+		monthYearLabel: 'MM YYYY',
+		dateA11yLabel: 'L',
+		monthYearA11yLabel: 'MM YYYY',
+	},
+};
 
 @Component({
 	selector: 'ts-app-root',
@@ -21,11 +40,17 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 				animate( '500ms ease-in' )
 			)
 		])
+	],
+	providers: [
+		{provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+		{provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+		{provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
 	]
 })
 export class AppComponent implements OnInit, OnDestroy, DoCheck {
 
 	title								= 'Activities';
+	date: FormControl					= new FormControl(moment());
 	activityUtils						= ActivityUtils;
 	redmine								= 'http://redmine.cross-systems.ch/issues/';
 	displayForm							= false;
@@ -111,6 +136,12 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 		this.onPageChange(0);
 	}
 
+	onDateChange(event: MatDatepickerInputEvent<Moment>) {
+		this.date = new FormControl(event.value);
+
+		console.log(this.date.value.format('L'));
+	}
+
 	getActivities(): void {
 		this.activityService.getActivities()
 			.then(activities => {
@@ -122,13 +153,11 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 				});
 
 				this.activities = activitiesTemp;
-			})
-			.then(() => {
 				this.activities.forEach(act => {
 					this.objDiffer[act.id] = this.differs.find(act).create();
 				});
-			})
-			.then(() => this.getWorkingTime());
+				this.getWorkingTime();
+			});
 	}
 
 	getActivity(): void {
