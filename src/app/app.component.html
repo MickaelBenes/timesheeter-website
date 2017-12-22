@@ -72,7 +72,6 @@
 <div class="clear"></div>
 <div class="datepicker-wrapper">
 	<input matInput [matDatepicker]="picker" placeholder="Date" disabled [value]="date.value" (dateChange)="onDateChange($event)">
-	<span class="bar"></span>
 	<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 	<mat-datepicker #picker disabled="false"></mat-datepicker>
 </div>
