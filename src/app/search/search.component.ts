@@ -1,9 +1,10 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, Input} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {ActivityService} from '../service/activity.service';
 import {Activity} from '../domain/Activity';
 import {ActivityUtils} from '../utils/ActivityUtils';
+import {Moment} from 'moment';
 
 @Component({
 	selector: 'ts-search',
@@ -15,6 +16,7 @@ export class SearchComponent implements OnInit {
 	private searchTerms = new Subject<string>();
 
 	@Output() activityChange: EventEmitter<Activity[]> = new EventEmitter<Activity[]>();
+	@Input() date: Moment;
 
 	constructor(private service: ActivityService) {}
 
@@ -23,7 +25,7 @@ export class SearchComponent implements OnInit {
 			.pipe(
 				debounceTime(300),
 				distinctUntilChanged(),
-				switchMap((term: string) => this.service.searchActivities(term))
+				switchMap((term: string) => this.service.searchActivities(term, this.date.unix()))
 			)
 			.subscribe(items => {
 				const activities: Activity[] = [];

@@ -24,8 +24,10 @@ export class ActivityService {
 		return Promise.reject(error.message || error);
 	}
 
-	getActivities(): Promise<Activity[]> {
-		return this.http.get(this.endpoint, this.httpOpts)
+	getActivities(date: number): Promise<Activity[]> {
+		const url	= `${ this.endpoint }/date/${ date }`;
+
+		return this.http.get(url, this.httpOpts)
 			.toPromise()
 			.then(response => response as Activity[])
 			.catch(this.handleError);
@@ -101,9 +103,10 @@ export class ActivityService {
 		);
 	}
 
-	searchActivities(searchTerms: string): Observable<Activity[]> {
+	searchActivities(searchTerms: string, date: number): Observable<Activity[]> {
 		if (!searchTerms.trim() || searchTerms == 'clearSearch') {
-			return this.http.get<Activity[]>(this.endpoint, this.httpOpts);
+			const url	= `${this.endpoint}/date/${date}`;
+			return this.http.get<Activity[]>(url, this.httpOpts);
 		}
 
 		const url = `${this.endpoint}/search/${searchTerms}`;

@@ -50,7 +50,7 @@ export const MY_FORMATS = {
 export class AppComponent implements OnInit, OnDestroy, DoCheck {
 
 	title								= 'Activities';
-	date: FormControl					= new FormControl(moment());
+	date: FormControl					= new FormControl(moment().startOf('day'));
 	activityUtils						= ActivityUtils;
 	redmine								= 'http://redmine.cross-systems.ch/issues/';
 	displayForm							= false;
@@ -139,11 +139,15 @@ export class AppComponent implements OnInit, OnDestroy, DoCheck {
 	onDateChange(event: MatDatepickerInputEvent<Moment>) {
 		this.date = new FormControl(event.value);
 
-		console.log(this.date.value.format('L'));
+		console.log(this.date.value.format('DD-MM-YYYY HH:mm'), this.date.value.unix());
+
+		this.getActivities();
+		this.onPageChange(0);
 	}
 
 	getActivities(): void {
-		this.activityService.getActivities()
+		// const dateStr = this.date.value.format('DD-MM-YYYY');
+		this.activityService.getActivities(this.date.value.unix())
 			.then(activities => {
 				const activitiesTemp = [];
 
